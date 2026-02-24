@@ -4,12 +4,13 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef, XSD, RDFS
 import uuid
 import hashlib
 import requests
+import re
 
 app = Flask(__name__)
 CORS(app)
 
 # 1. Namespaces (Conforme sua ontologia pop_turtle.ttl)
-SOP = Namespace("https://purl.archive.org/sopontology#")
+SOP = Namespace("https://purl.archive.org/sopontology/1.0/")
 ORG = Namespace("http://www.w3.org/ns/org#")
 FOAF = Namespace("http://xmlns.com/foaf/0.1/")
 BASE = Namespace("http://iff.edu.br/saeg/sopontology/")
@@ -21,6 +22,15 @@ def generate_stable_id(text):
     """Gera um ID curto e único baseado no texto para manter URIs estáveis."""
     if not text: return str(uuid.uuid4())[:8]
     return hashlib.md5(text.strip().lower().encode()).hexdigest()[:8]
+
+def slugify(text):
+    """Transforma 'Nome do POP' em 'nome_do_pop' para uso em URIs e arquivos."""
+    text = text.lower().strip()
+    text = re.sub(r'[^\w\s-]', '', text)
+    text = re.sub(r'[\s_-]+', '_', text)
+    return text
+
+    
 
 def upload_to_graphdb(rdf_data, repo_id="Dissertacao_SOP"):
     """Envia os dados diretamente para o repositório do GraphDB via API."""
@@ -46,13 +56,31 @@ def index():
 def save_rdf():
     data = request.json
     g = Graph()
-    g.bind("sop", SOP); g.bind("org", ORG); g.bind("foaf", FOAF); g.bind("base", BASE); g.bind("rdfs", RDFS);g.bind("skos", SKOS)
+    g.bind("sop", SOP); g.bind("org", ORG); g.bind("foaf", FOAF); g.bind("base", BASE); g.bind("rdfs", RDFS); g.bind("skos", SKOS)
 
     # --- A. INSTANCIAR O POP (SOP) ---
-    metadata = data.get('metadata', {})
-    pop_num = metadata.get('number') or "temp"
-    pop_uri = BASE[f"pop_{pop_num}"]
+    metadata = data.get('metadata', {}) 
     
+# --- NOVA LÓGICA DE NOMEAÇÃO (Nome + Número + Versão) ---
+    metadata = data.get('metadata', {})
+    
+    pop_name_raw = metadata.get('name', 'sem_nome')
+    pop_number_raw = metadata.get('number', '000') # Pega o número do formulário
+    pop_version_raw = metadata.get('version', '1.0')
+    
+    # Limpamos cada parte para evitar caracteres inválidos
+    pop_slug = slugify(pop_name_raw)
+    num_slug = slugify(str(pop_number_raw))
+    version_slug = slugify(pop_version_raw).replace("_", "-")
+    
+    # Montamos o ID único: ex: higienizacao_101_v1-0
+    pop_id = f"{pop_slug}_{num_slug}_{version_slug}"
+    
+    # Define a URI do POP
+    pop_uri = BASE[pop_id] 
+    # -------------------------------------------------------
+    # ------------------------------
+
     g.add((pop_uri, RDF.type, SOP.Sop))
     g.add((pop_uri, SOP.name, Literal(metadata.get('name', ''), datatype=XSD.string)))
     g.add((pop_uri, SOP.version, Literal(metadata.get('version', ''), datatype=XSD.string)))
@@ -72,37 +100,23 @@ def save_rdf():
     classifications = metadata.get('classifications', [])
     for class_name in classifications:
         if class_name:
-            # Cria um ID estável para o conceito (ex: concept_higienizacao)
             class_id = generate_stable_id(class_name)
             class_uri = BASE[f"concept_{class_id}"]
-            
-            # 1. Define como um skos:Concept
             g.add((class_uri, RDF.type, SKOS.Concept))
-            # 2. Adiciona o termo (prefLabel)
             g.add((class_uri, SKOS.prefLabel, Literal(class_name, datatype=XSD.string)))
-            # 3. Liga o POP à classificação via Object Property
             g.add((pop_uri, SOP.classification, class_uri))
+
     terms = metadata.get('terms', [])
     for t in terms:
         if t.get('name'):
-            # Gera ID estável para o termo para evitar duplicatas
             term_id = generate_stable_id(t['name'])
             term_uri = BASE[f"term_{term_id}"]
-            
-            # Define como um Conceito SKOS
             g.add((term_uri, RDF.type, SKOS.Concept))
-            # Adiciona o Termo/Sigla como rótulo preferencial
             g.add((term_uri, SKOS.prefLabel, Literal(t['name'], datatype=XSD.string)))
-            
-            # Se houver definição, adiciona usando skos:definition
             if t.get('definition'):
                 g.add((term_uri, SKOS.definition, Literal(t['definition'], datatype=XSD.string)))
-                
-            # LIGAÇÃO CRUCIAL: POP -> skos:Concept via sop:term
             g.add((pop_uri, SOP['term'], term_uri))
 
-
-    # Organização Responsável (Usando RDFS.label para melhor interoperabilidade)
     # --- MÚLTIPLOS RESPONSÁVEIS (ORGANIZAÇÕES) ---
     for org in metadata.get('responsible', []):
         if org.get('name'):
@@ -114,13 +128,7 @@ def save_rdf():
 
     # --- B. AGENTES (Criador, Revisor, Aprovador) ---
     agents_data = data.get('agents', {})
-    # Mapeamento de listas do JSON para propriedades da Ontologia
-    mapping = [
-        ('creators', SOP.createdBy),
-        ('checkers', SOP.checkedBy),
-        ('approvers', SOP.approvedBy)
-    ]
-
+    mapping = [('creators', SOP.createdBy), ('checkers', SOP.checkedBy), ('approvers', SOP.approvedBy)]
 
     for key, predicate in mapping:
         for agent in agents_data.get(key, []):
@@ -131,18 +139,18 @@ def save_rdf():
                 g.add((agent_uri, FOAF.name, Literal(agent['name'])))
                 g.add((pop_uri, predicate, agent_uri))
 
-    # --- C. ETAPAS (STEPS) E LÓGICA DE FLUXO ---
+    # --- C. ETAPAS (STEPS) ---
     step_uris = {} 
     for i, s in enumerate(data.get('steps', [])):
         s_idx = i + 1
-        step_uri = BASE[f"step_{pop_num}_{s_idx}"]
+        # Usamos o pop_id (nome_versao) para manter as URIs das etapas vinculadas ao POP
+        step_uri = BASE[f"step_{pop_id}_{s_idx}"]
         step_uris[str(s_idx)] = step_uri
         
         g.add((step_uri, RDF.type, SOP.Step))
         g.add((step_uri, SOP.name, Literal(s['name'])))
         g.add((pop_uri, SOP.includes, step_uri))
 
-        # Executor e Local
         for key, prop, cls_prefix in [('performer', SOP.performedBy, 'perf'), ('place', SOP.performedAt, 'place')]:
             obj = s.get(key, {})
             if obj.get('name'):
@@ -152,7 +160,6 @@ def save_rdf():
                 g.add((obj_uri, RDFS.label, Literal(obj['name'])))
                 g.add((step_uri, prop, obj_uri))
 
-        # Condições (BooleanExpression)
         logic = s.get('logic', {})
         if logic.get('preCondition'):
             pre_uri = BASE[f"pre_{generate_stable_id(logic['preCondition'])}"]
@@ -160,11 +167,11 @@ def save_rdf():
             g.add((pre_uri, SOP['term'], Literal(logic['preCondition'])))
             g.add((step_uri, SOP.preCondition, pre_uri))
 
-    # Transições e Condições de Guarda
+    # Transições
     for i, s in enumerate(data.get('steps', [])):
         logic = s.get('logic', {})
         if logic.get('targetId') and str(logic['targetId']) in step_uris:
-            trans_uri = BASE[f"trans_{pop_num}_{i+1}"]
+            trans_uri = BASE[f"trans_{pop_id}_{i+1}"]
             g.add((trans_uri, RDF.type, SOP.Transition))
             g.add((trans_uri, SOP.target, step_uris[str(logic['targetId'])]))
             g.add((step_uris[str(i+1)], SOP.transition, trans_uri))
@@ -175,7 +182,7 @@ def save_rdf():
                 g.add((guard_uri, SOP['term'], Literal(logic['guardCondition'])))
                 g.add((trans_uri, SOP.guardCondition, guard_uri))
 
-    # --- D. ITENS DO POP (SopItem) ---
+    # --- D. ITENS DO POP ---
     for item in data.get('items', []):
         item_id = generate_stable_id(f"{item['type']}_{item['name']}")
         item_uri = BASE[f"item_{item_id}"]
@@ -184,21 +191,23 @@ def save_rdf():
         g.add((item_uri, SOP.discriminator, Literal(item['discriminator'], datatype=XSD.integer)))
         g.add((pop_uri, SOP.sopItem, item_uri))
 
-    # 1. Gera o conteúdo Turtle em memória
+    # 1. Gera o conteúdo Turtle
     rdf_content = g.serialize(format="turtle")
 
-    # 2. Salva o arquivo físico para backup
-    filename = f"pop_output_{pop_num}.ttl"
+    # 2. SALVA COM O NOVO NOME DE ARQUIVO
+   
+    filename = f"{pop_id}.ttl"
     with open(filename, "w", encoding="utf-8") as f:
         f.write(rdf_content)
  
-    # 3. Envio automático para o GraphDB
+    # 3. Envio para o GraphDB
     foi_enviado = upload_to_graphdb(rdf_content, repo_id="Dissertacao_SOP")
 
     return jsonify({
-        "message": "RDF gerado e enviado ao GraphDB!" if foi_enviado else "RDF gerado localmente, mas falhou ao enviar ao GraphDB.",
+        "message": f"RDF '{filename}' gerado e enviado!",
         "file": filename,
-        "graphdb_status": foi_enviado
+        "graphdb_status": foi_enviado,
+        "pop_uri": str(pop_uri)
     }), 200
 
 # Adicione esta função auxiliar ao seu app.py
@@ -224,13 +233,15 @@ def view_page(pop_id):
 # --- NOVAS ROTAS DE API ---
 @app.route('/api/pops', methods=['GET'])
 def get_all_pops():
+    # Usamos o prefixo correto com # conforme sua ontologia
     sparql = """
-    PREFIX sop: <https://purl.archive.org/sopontology#>
+    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
     SELECT ?id ?name ?status WHERE {
         ?pop a sop:Sop ;
              sop:name ?name .
         OPTIONAL { ?pop sop:status ?s . BIND(STRAFTER(STR(?s), "#") AS ?status) }
-        BIND(STRAFTER(STR(?pop), "pop_") AS ?id)
+        # Pega o ID final da URI independente do prefixo
+        BIND(REPLACE(STR(?pop), "^.*[/#]", "") AS ?id)
     } ORDER BY ?name
     """
     result = query_graphdb(sparql)
@@ -238,19 +249,24 @@ def get_all_pops():
 
 @app.route('/api/pop/<pop_id>', methods=['GET'])
 def get_pop_details(pop_id):
-    uri = f"<http://iff.edu.br/saeg/sopontology/pop_{pop_id}>"
+    # O pop_id recebido já é o 'nome_numero_versao' completo
+    # Usamos BASE[pop_id] para garantir que a URI seja idêntica à salva
+    uri = f"<{BASE}{pop_id}>" 
 
     sparql = f"""
-    PREFIX sop: <https://purl.archive.org/sopontology#>
-    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
     SELECT ?p ?o ?label ?def ?type ?disc WHERE {{
         {uri} ?p ?o .
+        # Tenta pegar o nome/label do objeto conectado ao POP
+        OPTIONAL {{ ?o sop:name ?label }}
         OPTIONAL {{ ?o rdfs:label ?label }}
         OPTIONAL {{ ?o foaf:name ?label }}
         OPTIONAL {{ ?o skos:prefLabel ?label }}
+        
         OPTIONAL {{ ?o skos:definition ?def }}
         OPTIONAL {{ ?o a ?type }}
         OPTIONAL {{ ?o sop:discriminator ?disc }}
@@ -302,7 +318,7 @@ def get_pop_details(pop_id):
 
         elif p == str(SOP.sopItem):
             data["items"].append({
-                "name": label,
+                "name": label,  # Aqui agora virá o nome real
                 "type": row.get('type', {}).get('value', '').split("#")[-1],
                 "order": int(row.get('disc', {}).get('value', 0))
             })

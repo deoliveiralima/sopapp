@@ -1,0 +1,299 @@
+@prefix base: <http://iff.edu.br/saeg/sopontology/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:pop_01 a sop:Sop ;
+    sop:approvalDate "2020-11-30"^^xsd:date ;
+    sop:approvedBy base:agent_5bcfba03 ;
+    sop:checkedBy base:agent_5bcfba03 ;
+    sop:classification base:concept_406c08e6 ;
+    sop:createdBy base:agent_0d863233 ;
+    sop:creationDate "2020-10-30T00:00:00"^^xsd:dateTime ;
+    sop:description """É a medida individual mais simples, rápida, econômica, eficaz e
+importante para prevenir a propagação das Infecções Relacionadas à Assistência à
+Saúde (IRAS), visando à segurança do cliente e dos profissionais de saúde."""^^xsd:string ;
+    sop:includes base:step_01_1,
+        base:step_01_10,
+        base:step_01_11,
+        base:step_01_12,
+        base:step_01_2,
+        base:step_01_3,
+        base:step_01_4,
+        base:step_01_5,
+        base:step_01_6,
+        base:step_01_7,
+        base:step_01_8,
+        base:step_01_9 ;
+    sop:name "HIGIENIZAÇÃO SIMPLES DAS MÃOS"^^xsd:string ;
+    sop:responsible base:org_9ce3520b ;
+    sop:sopItem base:item_0816eae4,
+        base:item_0c93a06a,
+        base:item_175c8342,
+        base:item_18eb099b,
+        base:item_1b795738,
+        base:item_23fcb02f,
+        base:item_24e94829,
+        base:item_257246c2,
+        base:item_28cc64d9,
+        base:item_2f387e4c,
+        base:item_2f487493,
+        base:item_3059ed0d,
+        base:item_3528d879,
+        base:item_47923b7d,
+        base:item_4c2d67c4,
+        base:item_5c819a82,
+        base:item_65743c5d,
+        base:item_69f2c4ff,
+        base:item_6d78e0aa,
+        base:item_6d9299f8,
+        base:item_760a81bd,
+        base:item_90a47624,
+        base:item_9c2e47ac,
+        base:item_a5bb4952,
+        base:item_c45dbaab,
+        base:item_ccab7a92,
+        base:item_d6d482e3,
+        base:item_f44eb582,
+        base:item_fde86925 ;
+    sop:status sop:approved ;
+    sop:version "1"^^xsd:string .
+
+base:agent_0d863233 a foaf:Person ;
+    foaf:name "Maria Cristina do V. Silva" .
+
+base:concept_406c08e6 a skos:Concept ;
+    skos:prefLabel "Médico"^^xsd:string .
+
+base:item_0816eae4 a sop:Note ;
+    sop:discriminator 7 ;
+    sop:name "Não utilizar toalhas de pano, nem secador elétrico para a secagem das mãos em serviços de saúde." .
+
+base:item_0c93a06a a sop:Note ;
+    sop:discriminator 5 ;
+    sop:name "Utilizar, preferencialmente, torneiras de acionamento não manual. Caso a torneira seja de acionamento manual, esta deverá ser fechada ao término do procedimento utilizando papel-toalha." .
+
+base:item_175c8342 a sop:ExpectedResults ;
+    sop:discriminator 1 ;
+    sop:name "Prevenir a transmissão de microrganismos patogênicos e promover segurança ao cliente e aos profissionais." .
+
+base:item_18eb099b a sop:BibliographicReference ;
+    sop:discriminator 1 ;
+    sop:name "BRASIL. Agência Nacional de Vigilância Sanitária. Nota Técnica nº 01/2018 GVIMS/GGTES/ANVISA: orientações gerais para higiene das mãos em serviços de saúde. Brasília, 2018. 16 p." .
+
+base:item_1b795738 a sop:Scope ;
+    sop:discriminator 10 ;
+    sop:name "Antes e após o uso de luvas" .
+
+base:item_23fcb02f a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Dispensador de sabonete líquido" .
+
+base:item_24e94829 a sop:BibliographicReference ;
+    sop:discriminator 4 ;
+    sop:name "UNIVERSIDADE FEDERAL DO TRIÂNGULO MINEIRO. Hospital de Clínicas. Procedimento operacional padrão: POP.DE.008: Higienização das mãos. Minas Gerais: EBSERH, 2020. Disponível em: http://www2.ebserh.gov.br/documents/147715/0/Higieniza%C3%A7%C3%A3o+das+ m%C3%A3os+final...pdf/45d79725-de5f-4248-bcb2-228ed7b9a258. Acesso em: 27 jul. 2020." .
+
+base:item_257246c2 a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Pia apropriada e destinada à higienização das mãos (com água instalada)" .
+
+base:item_28cc64d9 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "A higienização simples das mãos deve ter duração de 40 a 60 segundos." .
+
+base:item_2f387e4c a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Remover os microrganismos que colonizam as camadas superficiais da pele, assim como o suor, a oleosidade e as células mortas, retirando a sujidade propícia a permanência e a proliferação de microrganismos." .
+
+base:item_2f487493 a sop:Note ;
+    sop:discriminator 3 ;
+    sop:name "Não utilizar sabonetes em barra, pois estes favorecem a contaminação cruzada" .
+
+base:item_3059ed0d a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "BRASIL. Agência Nacional de Vigilância Sanitária. Segurança do Paciente em Serviços de Saúde: higienização das mãos. Brasília: 2009. 105 p." .
+
+base:item_3528d879 a sop:Scope ;
+    sop:discriminator 1 ;
+    sop:name "Quando as mãos estiverem visivelmente sujas" .
+
+base:item_47923b7d a sop:Material ;
+    sop:discriminator 5 ;
+    sop:name "Lixeira para descarte de resíduos comuns com tampa acionada por pedal" .
+
+base:item_4c2d67c4 a sop:BibliographicReference ;
+    sop:discriminator 3 ;
+    sop:name "UNIVERSIDADE FEDERAL DO ESTADO DO RIO DE JANEIRO. Hospital Universitário Gaffrée e Guinle. Procedimento operacional padrão: POP.CIH.001: Higienização das Mãos. Rio de Janeiro: EBSERH, 2020. Disponível em: http:// http://www2.ebserh.gov.br/documents/1132789/1132848/POP+HIGIENIZA%C3%87 %C3%83O+DAS+M%C3%83OS. Acesso em: 27 jul. 2020." .
+
+base:item_5c819a82 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "Recomenda-se manter as unhas curtas e não usar unhas artificiais." .
+
+base:item_65743c5d a sop:Scope ;
+    sop:discriminator 7 ;
+    sop:name "Antes do preparo e manipulação de medicações" .
+
+base:item_69f2c4ff a sop:BibliographicReference ;
+    sop:discriminator 5 ;
+    sop:name "ORGANIZAÇÃO MUNDIAL DA SAÚDE (OMS). Manual de referência técnica para a higiene das mãos: para ser utilizado por profissionais de saúde, formadores e observadores de práticas de higiene das mãos. 2009. Disponível em: http://proqualis.net/sites/proqualis.net/files/Manual_de_Refer%C3%AAncia_T%C3% A9cnica.pdf. Acesso em: 27 jul. 2020." .
+
+base:item_6d78e0aa a sop:Note ;
+    sop:discriminator 6 ;
+    sop:name "Instalar o porta-papel próximo a pia, porém em local que não receba respingos de água e sabonete. O porta-papel deve ser de material que não favoreça a oxidação e que possibilite o uso individual, folha a folha." .
+
+base:item_6d9299f8 a sop:Scope ;
+    sop:discriminator 2 ;
+    sop:name "Ao iniciar e terminar o turno de trabalho" .
+
+base:item_760a81bd a sop:Scope ;
+    sop:discriminator 4 ;
+    sop:name "Antes e após a execução de procedimentos assistenciais" .
+
+base:item_90a47624 a sop:Scope ;
+    sop:discriminator 5 ;
+    sop:name "Após risco de exposição a fluidos corporais" .
+
+base:item_9c2e47ac a sop:Scope ;
+    sop:discriminator 8 ;
+    sop:name "Antes e após ir ao banheiro" .
+
+base:item_a5bb4952 a sop:Note ;
+    sop:discriminator 4 ;
+    sop:name "O uso de luvas não exclui a necessidade de higienização das mãos antes e depois" .
+
+base:item_c45dbaab a sop:Scope ;
+    sop:discriminator 9 ;
+    sop:name "Após assuar o nariz, espirrar ou tossir" .
+
+base:item_ccab7a92 a sop:Scope ;
+    sop:discriminator 6 ;
+    sop:name "Após contato com superfícies próximas ao cliente" .
+
+base:item_d6d482e3 a sop:Material ;
+    sop:discriminator 3 ;
+    sop:name "Sabonete líquido neutro e hipoalergênico" .
+
+base:item_f44eb582 a sop:Scope ;
+    sop:discriminator 3 ;
+    sop:name "Antes e após qualquer tipo de contato com o cliente" .
+
+base:item_fde86925 a sop:Material ;
+    sop:discriminator 4 ;
+    sop:name "Porta papel-toalha e papel-toalha descartável" .
+
+base:org_9ce3520b a org:Organization ;
+    rdfs:label "NECESSIDADES HUMANA BÁSICA REGULAÇÃO RESPIRATÓRIA" .
+
+base:step_01_1 a sop:Step ;
+    sop:name "Conferir a presença de sabonete líquido e de papel-toalha." ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_10 a sop:Step ;
+    sop:name """Friccionar as polpas
+digitais e as unhas da
+mão esquerda contra a
+palma da mão direita,
+fechada em concha,
+fazendo movimento
+circular, e vice-versa.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_11 a sop:Step ;
+    sop:name """Esfregar o punho
+esquerdo com o auxílio
+da palma da mão direita,
+realizando movimento
+circular, e vice-versa.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_12 a sop:Step ;
+    sop:name """Enxaguar as mãos,
+retirando os resíduos de
+sabonete. Evitar contato
+direto das mãos com a
+torneira.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_2 a sop:Step ;
+    sop:name "Retirar os adornos (anéis, relógios e pulseiras) e dobrar os punhos da veste." ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_3 a sop:Step ;
+    sop:name """Abrir a torneira e
+molhar as mãos, evitando
+encostar-se a pia.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_4 a sop:Step ;
+    sop:name """Aplicar na palma da mão quantidade
+suficiente de sabonete líquido para cobrir toda a
+superfície das mãos (seguir a quantidade
+recomendada pelo fabricante).""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_5 a sop:Step ;
+    sop:name """Ensaboar as palmas
+das mãos,
+friccionando-as entre
+si.
+6. Esfregar a palma da mão
+direita contra o dorso da mão
+esquerda, entrelaçando os
+dedos, e vice-versa""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_6 a sop:Step ;
+    sop:name """6. Esfregar a palma da mão
+direita contra o dorso da mão
+esquerda, entrelaçando os
+dedos, e vice-versa.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_7 a sop:Step ;
+    sop:name """Entrelaçar os
+dedos e friccionar os
+espaços interdigitais.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_8 a sop:Step ;
+    sop:name """Esfregar o dorso dos
+dedos de uma mão com
+a palma da mão oposta,
+segurando os dedos,
+com movimento de vai e
+vem, e vice-versa.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:step_01_9 a sop:Step ;
+    sop:name """Esfregar o polegar
+direito com o auxílio da
+palma da mão esquerda,
+realizando movimento
+circular, e vice-versa.""" ;
+    sop:performedAt base:place_03d1e6ff ;
+    sop:performedBy base:perf_c94b2d3e .
+
+base:agent_5bcfba03 a foaf:Group,
+        foaf:Person ;
+    foaf:name "Grupo de Trabalho Portaria: 1228/2020" .
+
+base:perf_c94b2d3e a sop:OrganizationPerformer ;
+    rdfs:label "Equipe de Enfermagem" .
+
+base:place_03d1e6ff a sop:OrganizationPlace ;
+    rdfs:label "setores de enfermagem dos Campi" .
+
