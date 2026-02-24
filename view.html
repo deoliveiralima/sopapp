@@ -156,15 +156,11 @@
         // Classificações
         renderBadges(data.concepts.classifications, 'listClassifications', 'bg-success');
 
-        // Glossário
-        document.getElementById('listTerms').innerHTML = `
-            <dl>
-                ${data.concepts.terms.map(t => `
-                    <dt class="fw-bold">${t.name}</dt>
-                    <dd class="mb-2">${t.definition || '—'}</dd>
-                `).join('')}
-            </dl>
-        `;
+        // Glossário 
+        // No final do view.html, dentro de renderPop()
+        document.getElementById('listTerms').innerHTML = data.concepts.terms.map(t => 
+            `<strong>${t.name}:</strong> ${t.def}<br>`
+        ).join('');
 
         // Itens agrupados por tipo
         const grouped = {};

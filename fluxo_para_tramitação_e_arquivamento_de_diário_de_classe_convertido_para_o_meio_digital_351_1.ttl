@@ -1,0 +1,187 @@
+@prefix base: <http://iff.edu.br/saeg/sopontology/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology/1.0/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1 a sop:Sop ;
+    sop:approvalDate "2023-01-25"^^xsd:date ;
+    sop:approvedBy base:agent_ae180624 ;
+    sop:createdBy base:agent_67d38a75,
+        base:agent_8ab56599,
+        base:agent_c7863cb5 ;
+    sop:creationDate "2023-01-11T00:00:00"^^xsd:dateTime ;
+    sop:description """Define os procedimentos inerentes ao fluxo para tramitação e arquivamento de diário de classe convertido para o
+meio digital dos cursos de graduação da Univasf."""^^xsd:string ;
+    sop:includes base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_1,
+        base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_2,
+        base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_3,
+        base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_4,
+        base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_5 ;
+    sop:name "Fluxo para tramitação e arquivamento de diário de classe convertido para o meio digital"^^xsd:string ;
+    sop:responsible base:org_18930168,
+        base:org_77e6ecd1 ;
+    sop:sopItem base:item_30f15943,
+        base:item_48a2fbaa,
+        base:item_4a2cfde6,
+        base:item_4ab3bacc,
+        base:item_519fc650,
+        base:item_58b2ca1e,
+        base:item_5a23f6ec,
+        base:item_7474b69b,
+        base:item_74e0c4e3,
+        base:item_7ff17fc4,
+        base:item_9f58b3cb,
+        base:item_a88810b0,
+        base:item_e4750061 ;
+    sop:status sop:approved ;
+    sop:term base:term_0190141e,
+        base:term_15d64265,
+        base:term_37f523ba,
+        base:term_39c0b36f,
+        base:term_51f7b415,
+        base:term_5d1a3b17,
+        base:term_fd7cfc4d ;
+    sop:version "1"^^xsd:string .
+
+base:agent_67d38a75 a foaf:Person ;
+    foaf:name "Keylha Santana Hüller" .
+
+base:agent_8ab56599 a foaf:Person ;
+    foaf:name "Saulo Henrique Castro Reis" .
+
+base:agent_ae180624 a foaf:Group ;
+    foaf:name "Pró-Reitor(a) de Ensino" .
+
+base:agent_c7863cb5 a foaf:Person ;
+    foaf:name "Samara Régia de Andrade" .
+
+base:item_30f15943 a sop:BibliographicReference ;
+    sop:discriminator 5 ;
+    sop:name "LEI nº 13.709/2018 - Lei Geral de Proteção de Dados Pessoais (LGPD);" .
+
+base:item_48a2fbaa a sop:BibliographicReference ;
+    sop:discriminator 3,
+        4 ;
+    sop:name "Portaria do MEC nº 360/2022, dispõe sobre a conversão do acervo acadêmico para o meio digital;" .
+
+base:item_4a2cfde6 a sop:Note ;
+    sop:discriminator 3 ;
+    sop:name "Observar a Portaria do MEC nº 360/2022, dispõe sobre a conversão do acervo acadêmico para o meio digital;" .
+
+base:item_4ab3bacc a sop:BibliographicReference ;
+    sop:discriminator 1 ;
+    sop:name "Resolução nº 07/2016, que expede normas e procedimentos para elaboração e arquivamento do diário de classe docente e à destinação de outros documentos pertencentes ao Acervo Acadêmico da Univasf;" .
+
+base:item_519fc650 a sop:Note ;
+    sop:discriminator 5 ;
+    sop:name "Seguir todo o fluxo inerente às atividades ao envio do diário de classe convertido para o meio digital." .
+
+base:item_58b2ca1e a sop:BibliographicReference ;
+    sop:discriminator 6 ;
+    sop:name "Portaria AN nº 92/ 2011 – Código de Classificação e a Tabela de Temporalidade e Destinação de Documentos de Arquivo relativos às Atividades-Fim das Instituições Federais de Ensino Superior (IFES)." .
+
+base:item_5a23f6ec a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "Decreto nº 278/2020 que estabelece a técnica e os requisitos para digitalização de documentos públicos ou privados, a fim de que os documentos digitalizados produzam os mesmos efeitos legais dos documentos originais;" .
+
+base:item_7474b69b a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Observar os preceitos estabelecidos pela Resolução nº 07/2016, que expede normas e procedimentos para elaboração e arquivamento do diário de classe docente e à destinação de outros documentos pertencentes ao Acervo Acadêmico da Univasf;" .
+
+base:item_74e0c4e3 a sop:Objective ;
+    sop:discriminator 2 ;
+    sop:name "Apresentar os setores envolvidos na atividade, bem como informar as suas competências relativas ao processo;" .
+
+base:item_7ff17fc4 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Orientar os docentes da Univasf sobre os procedimentos de entrega dos diários de classe;" .
+
+base:item_9f58b3cb a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "Observar o disposto no Decreto nº 10.278 que estabelece a técnica e os requisitos para digitalização de documentos públicos ou privados, a fim de que os documentos digitalizados produzam os mesmos efeitos legais dos documentos originais;" .
+
+base:item_a88810b0 a sop:Note ;
+    sop:discriminator 4 ;
+    sop:name "Autuar processo acadêmico, utilizando o sistema de processo eletrônico da UNIVASF (SIPAC);" .
+
+base:item_e4750061 a sop:Objective ;
+    sop:discriminator 3 ;
+    sop:name "Contribuir para a celeridade e a transparência dos documentos institucionais." .
+
+base:org_18930168 a org:Organization ;
+    rdfs:label "Pró-Reitoria de Ensino" .
+
+base:org_77e6ecd1 a org:Organization ;
+    rdfs:label "Secretaria de Registro e Controle Acadêmico" .
+
+base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_1 a sop:Step ;
+    sop:name """Cadastrar documento
+SIPAC, solicitando ao
+SIC/Campus do
+curso a abertura de
+processo""" ;
+    sop:performedBy base:perf_96fe1e96 .
+
+base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_2 a sop:Step ;
+    sop:name """Digitalizar de acordo com o
+Decreto '+10278/2020, a
+Caderneta de atividade e o
+relatório de controle diário""" ;
+    sop:performedBy base:perf_96fe1e96 .
+
+base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_3 a sop:Step ;
+    sop:name """Após o recebimento
+do processo,
+adicionar os
+documentos
+digitalizados""" ;
+    sop:performedBy base:perf_96fe1e96 .
+
+base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_4 a sop:Step ;
+    sop:name """Preencher a DECLARAÇÃO
+DE RESPONSABILIDADE,
+modelo unidade no SIPAC e
+adicionar no processo""" ;
+    sop:performedBy base:perf_96fe1e96 .
+
+base:step_fluxo_para_tramitação_e_arquivamento_de_diário_de_classe_convertido_para_o_meio_digital_351_1_5 a sop:Step ;
+    sop:name """Encaminhar o
+processo do
+Diário de
+Classe à DAE""" ;
+    sop:performedBy base:perf_96fe1e96 .
+
+base:term_0190141e a skos:Concept ;
+    skos:definition "Secretaria de Registro e Controle Acadêmico"^^xsd:string ;
+    skos:prefLabel "SRCA"^^xsd:string .
+
+base:term_15d64265 a skos:Concept ;
+    skos:definition "Ministério da Educação"^^xsd:string ;
+    skos:prefLabel "MEC"^^xsd:string .
+
+base:term_37f523ba a skos:Concept ;
+    skos:definition "Pró-Reitoria de Ensino"^^xsd:string ;
+    skos:prefLabel "PROEN"^^xsd:string .
+
+base:term_39c0b36f a skos:Concept ;
+    skos:definition "Divisão de Assuntos Educacionais"^^xsd:string ;
+    skos:prefLabel "DAE"^^xsd:string .
+
+base:term_51f7b415 a skos:Concept ;
+    skos:definition "Coordenação de Registro de Graduação"^^xsd:string ;
+    skos:prefLabel "CRA"^^xsd:string .
+
+base:term_5d1a3b17 a skos:Concept ;
+    skos:definition "Universidade Federal do Vale do São Francisco"^^xsd:string ;
+    skos:prefLabel "UNIVASF"^^xsd:string .
+
+base:term_fd7cfc4d a skos:Concept ;
+    skos:definition "Sistema Integrado de Patrimônio, Administração e Contratos"^^xsd:string ;
+    skos:prefLabel "SIPAC"^^xsd:string .
+
+base:perf_96fe1e96 a sop:RolePerformer ;
+    rdfs:label "Docentes" .
+

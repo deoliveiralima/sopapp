@@ -249,9 +249,8 @@ def get_all_pops():
 
 @app.route('/api/pop/<pop_id>', methods=['GET'])
 def get_pop_details(pop_id):
-    # O pop_id recebido já é o 'nome_numero_versao' completo
-    # Usamos BASE[pop_id] para garantir que a URI seja idêntica à salva
-    uri = f"<{BASE}{pop_id}>" 
+    # Monta a URI correta do POP usando o BASE
+    uri = f"<{BASE}{pop_id}>"
 
     sparql = f"""
     PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
@@ -261,19 +260,32 @@ def get_pop_details(pop_id):
 
     SELECT ?p ?o ?label ?def ?type ?disc WHERE {{
         {uri} ?p ?o .
-        # Tenta pegar o nome/label do objeto conectado ao POP
+        # Tenta obter o nome amigável do objeto ligado (Item, Agente, etc)
         OPTIONAL {{ ?o sop:name ?label }}
         OPTIONAL {{ ?o rdfs:label ?label }}
         OPTIONAL {{ ?o foaf:name ?label }}
         OPTIONAL {{ ?o skos:prefLabel ?label }}
         
+        # BUSCA O RÓTULO DA CLASSE (TIPO) EM PORTUGUÊS
+        OPTIONAL {{ 
+            ?o a ?type . 
+            ?type rdfs:label ?typeLabel .
+            FILTER(LANG(?typeLabel) = "pt")
+        }}
+
+        
         OPTIONAL {{ ?o skos:definition ?def }}
         OPTIONAL {{ ?o a ?type }}
         OPTIONAL {{ ?o sop:discriminator ?disc }}
+
+        OPTIONAL {{ ?o a ?type . ?type rdfs:label ?typeLabel . FILTER(LANG(?typeLabel) = "pt") }}
+        OPTIONAL {{ ?o sop:discriminator ?disc }}
+
     }}
     """
+    
     result = query_graphdb(sparql)
-    if not result:
+    if not result or not result['results']['bindings']:
         return jsonify({"error": "POP não encontrado"}), 404
 
     data = {
@@ -287,49 +299,59 @@ def get_pop_details(pop_id):
     for row in result['results']['bindings']:
         p = row['p']['value']
         o = row['o']['value']
+        # Prioriza o label (nome amigável), se não houver, usa a URI
         label = row.get('label', {}).get('value', o)
 
+        # --- METADADOS ---
         if p == str(SOP.name):
             data["metadata"]["name"] = label
         elif p == str(SOP.version):
             data["metadata"]["version"] = label
-        elif p == str(SOP.status):
-            data["metadata"]["status"] = o.split("#")[-1]
         elif p == str(SOP.description):
             data["metadata"]["description"] = label
+        elif p == str(SOP.status):
+            # Limpa a URI do status (ex: ...#approved -> approved)
+            status_clean = o.split("#")[-1] if "#" in o else o.split("/")[-1]
+            data["metadata"]["status"] = status_clean
 
-        elif p == str(SOP.responsible):
-            data["agents"]["responsible"].append(label)
-        elif p == str(SOP.createdBy):
-            data["agents"]["creators"].append(label)
-        elif p == str(SOP.checkedBy):
-            data["agents"]["checkers"].append(label)
-        elif p == str(SOP.approvedBy):
-            data["agents"]["approvers"].append(label)
+        # --- AGENTES ---
+        elif p == str(SOP.responsible): data["agents"]["responsible"].append(label)
+        elif p == str(SOP.createdBy): data["agents"]["creators"].append(label)
+        elif p == str(SOP.checkedBy): data["agents"]["checkers"].append(label)
+        elif p == str(SOP.approvedBy): data["agents"]["approvers"].append(label)
 
+        # --- CONCEITOS/TERMOS ---
         elif p == str(SOP.classification):
             data["concepts"]["classifications"].append(label)
-
+        # Localize o bloco 'elif p == str(SOP.term):' no app.py
+        # Localize o bloco 'elif p == str(SOP.term):' no app.py
         elif p == str(SOP.term):
+            # 'def' deve ser o nome da chave para o JavaScript ler corretamente
             data["concepts"]["terms"].append({
                 "name": label,
-                "definition": row.get('def', {}).get('value', '')
+                "def": row.get('def', {}).get('value', 'Sem definição disponível')
             })
 
+        # --- ITENS (MATERIAIS/EQUIPAMENTOS) ---
         elif p == str(SOP.sopItem):
+            # Tenta usar o rótulo em português, se não existir, usa o nome da classe
+            tipo_display = row.get('typeLabel', {}).get('value')
+            if not tipo_display:
+                tipo_display = row.get('type', {}).get('value', '').split("/")[-1].split("#")[-1]
+
             data["items"].append({
-                "name": label,  # Aqui agora virá o nome real
-                "type": row.get('type', {}).get('value', '').split("#")[-1],
+                "name": label,
+                "type": tipo_display, # Ex: "Material" em vez de "Material" ou "Equipamento"
                 "order": int(row.get('disc', {}).get('value', 0))
             })
 
+        # --- ETAPAS ---
         elif p == str(SOP.includes):
             data["steps"].append({
                 "uri": o,
                 "name": label
             })
 
-    # Ordenações importantes
     data["items"].sort(key=lambda x: x["order"])
     return jsonify(data)
 
