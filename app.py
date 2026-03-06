@@ -5,6 +5,7 @@ import uuid
 import hashlib
 import requests
 import re
+import unicodedata
 
 app = Flask(__name__)
 CORS(app)
@@ -24,7 +25,9 @@ def generate_stable_id(text):
     return hashlib.md5(text.strip().lower().encode()).hexdigest()[:8]
 
 def slugify(text):
-    """Transforma 'Nome do POP' em 'nome_do_pop' para uso em URIs e arquivos."""
+
+ 
+    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
     text = text.lower().strip()
     text = re.sub(r'[^\w\s-]', '', text)
     text = re.sub(r'[\s_-]+', '_', text)
@@ -249,10 +252,28 @@ def get_all_pops():
 
 @app.route('/api/pop/<pop_id>', methods=['GET'])
 def get_pop_details(pop_id):
-    # Monta a URI correta do POP usando o BASE
+
     uri = f"<{BASE}{pop_id}>"
 
-    sparql = f"""
+    # 🔹 1. Inicializa data PRIMEIRO
+    data = {
+        "metadata": {},
+        "agents": {
+            "responsible": [],
+            "creators": [],
+            "checkers": [],
+            "approvers": []
+        },
+        "concepts": {
+            "classifications": [],
+            "terms": []
+        },
+        "items": [],
+        "steps": []
+    }
+
+    # 🔹 2. Consulta principal
+    sparql_main = f"""
     PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -260,49 +281,27 @@ def get_pop_details(pop_id):
 
     SELECT ?p ?o ?label ?def ?type ?disc WHERE {{
         {uri} ?p ?o .
-        # Tenta obter o nome amigável do objeto ligado (Item, Agente, etc)
         OPTIONAL {{ ?o sop:name ?label }}
         OPTIONAL {{ ?o rdfs:label ?label }}
         OPTIONAL {{ ?o foaf:name ?label }}
         OPTIONAL {{ ?o skos:prefLabel ?label }}
-        
-        # BUSCA O RÓTULO DA CLASSE (TIPO) EM PORTUGUÊS
-        OPTIONAL {{ 
-            ?o a ?type . 
-            ?type rdfs:label ?typeLabel .
-            FILTER(LANG(?typeLabel) = "pt")
-        }}
-
-        
         OPTIONAL {{ ?o skos:definition ?def }}
         OPTIONAL {{ ?o a ?type }}
         OPTIONAL {{ ?o sop:discriminator ?disc }}
-
-        OPTIONAL {{ ?o a ?type . ?type rdfs:label ?typeLabel . FILTER(LANG(?typeLabel) = "pt") }}
-        OPTIONAL {{ ?o sop:discriminator ?disc }}
-
     }}
     """
-    
-    result = query_graphdb(sparql)
+
+    result = query_graphdb(sparql_main)
+
     if not result or not result['results']['bindings']:
         return jsonify({"error": "POP não encontrado"}), 404
 
-    data = {
-        "metadata": {},
-        "agents": {"responsible": [], "creators": [], "checkers": [], "approvers": []},
-        "concepts": {"classifications": [], "terms": []},
-        "items": [],
-        "steps": []
-    }
-
+    # 🔹 3. Processa resultado principal
     for row in result['results']['bindings']:
         p = row['p']['value']
         o = row['o']['value']
-        # Prioriza o label (nome amigável), se não houver, usa a URI
         label = row.get('label', {}).get('value', o)
 
-        # --- METADADOS ---
         if p == str(SOP.name):
             data["metadata"]["name"] = label
         elif p == str(SOP.version):
@@ -310,49 +309,55 @@ def get_pop_details(pop_id):
         elif p == str(SOP.description):
             data["metadata"]["description"] = label
         elif p == str(SOP.status):
-            # Limpa a URI do status (ex: ...#approved -> approved)
-            status_clean = o.split("#")[-1] if "#" in o else o.split("/")[-1]
-            data["metadata"]["status"] = status_clean
+            data["metadata"]["status"] = o.split("#")[-1]
 
-        # --- AGENTES ---
-        elif p == str(SOP.responsible): data["agents"]["responsible"].append(label)
-        elif p == str(SOP.createdBy): data["agents"]["creators"].append(label)
-        elif p == str(SOP.checkedBy): data["agents"]["checkers"].append(label)
-        elif p == str(SOP.approvedBy): data["agents"]["approvers"].append(label)
+        elif p == str(SOP.responsible):
+            data["agents"]["responsible"].append(label)
+        elif p == str(SOP.createdBy):
+            data["agents"]["creators"].append(label)
+        elif p == str(SOP.checkedBy):
+            data["agents"]["checkers"].append(label)
+        elif p == str(SOP.approvedBy):
+            data["agents"]["approvers"].append(label)
 
-        # --- CONCEITOS/TERMOS ---
         elif p == str(SOP.classification):
             data["concepts"]["classifications"].append(label)
-        # Localize o bloco 'elif p == str(SOP.term):' no app.py
-        # Localize o bloco 'elif p == str(SOP.term):' no app.py
-        elif p == str(SOP.term):
-            # 'def' deve ser o nome da chave para o JavaScript ler corretamente
-            data["concepts"]["terms"].append({
-                "name": label,
-                "def": row.get('def', {}).get('value', 'Sem definição disponível')
-            })
 
-        # --- ITENS (MATERIAIS/EQUIPAMENTOS) ---
         elif p == str(SOP.sopItem):
-            # Tenta usar o rótulo em português, se não existir, usa o nome da classe
-            tipo_display = row.get('typeLabel', {}).get('value')
-            if not tipo_display:
-                tipo_display = row.get('type', {}).get('value', '').split("/")[-1].split("#")[-1]
-
             data["items"].append({
                 "name": label,
-                "type": tipo_display, # Ex: "Material" em vez de "Material" ou "Equipamento"
-                "order": int(row.get('disc', {}).get('value', 0))
+                "type": row.get("type", {}).get("value", "").split("#")[-1],
+                "order": int(row.get("disc", {}).get("value", 0))
             })
 
-        # --- ETAPAS ---
         elif p == str(SOP.includes):
             data["steps"].append({
                 "uri": o,
                 "name": label
             })
 
-    data["items"].sort(key=lambda x: x["order"])
+    # 🔹 4. Consulta ESPECÍFICA do glossário (AGORA SIM)
+    sparql_terms = f"""
+    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+    SELECT ?label ?def WHERE {{
+        {uri} sop:term ?term .
+        ?term a skos:Concept ;
+              skos:prefLabel ?label .
+        OPTIONAL {{ ?term skos:definition ?def }}
+    }}
+    """
+
+    terms_result = query_graphdb(sparql_terms)
+
+    if terms_result:
+        for row in terms_result["results"]["bindings"]:
+            data["concepts"]["terms"].append({
+                "name": row["label"]["value"],
+                "def": row.get("def", {}).get("value", "Sem definição disponível")
+            })
+
     return jsonify(data)
 
 if __name__ == '__main__':

@@ -1,0 +1,84 @@
+@prefix base: <http://iff.edu.br/saeg/sopontology/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology/1.0/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:nome_pop_123_1 a sop:Sop ;
+    sop:approvalDate "2021-11-11"^^xsd:date ;
+    sop:approvedBy base:agent_70399b87 ;
+    sop:checkedBy base:agent_e8d3bd9e ;
+    sop:classification base:concept_cceef359 ;
+    sop:createdBy base:agent_df3e1d81 ;
+    sop:creationDate "2021-11-11T00:00:00"^^xsd:dateTime ;
+    sop:description "Descrição Geral"^^xsd:string ;
+    sop:includes base:step_nome_pop_123_1_1,
+        base:step_nome_pop_123_1_2 ;
+    sop:name "Nome POP"^^xsd:string ;
+    sop:responsible base:org_cbcd91e2 ;
+    sop:sopItem base:item_00d68e66,
+        base:item_35360ed1,
+        base:item_58252b10,
+        base:item_cc21e350,
+        base:item_e1ef2dd9 ;
+    sop:status sop:draft ;
+    sop:term base:term_9bd8cf6f ;
+    sop:version "1"^^xsd:string .
+
+base:agent_70399b87 a foaf:Group ;
+    foaf:name "Aprovador" .
+
+base:agent_df3e1d81 a foaf:Person ;
+    foaf:name "Elaborador" .
+
+base:agent_e8d3bd9e a foaf:Person ;
+    foaf:name "Revisor" .
+
+base:concept_cceef359 a skos:Concept ;
+    skos:prefLabel "Classificação"^^xsd:string .
+
+base:item_00d68e66 a sop:SafeInstruction ;
+    sop:discriminator 1 ;
+    sop:name "Segurança" .
+
+base:item_35360ed1 a sop:Objective ;
+    sop:discriminator 2 ;
+    sop:name "Objetivo 2" .
+
+base:item_58252b10 a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Material 2" .
+
+base:item_cc21e350 a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Material 1" .
+
+base:item_e1ef2dd9 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Objetivo 1" .
+
+base:org_cbcd91e2 a org:Organization ;
+    rdfs:label "reponsavel" .
+
+base:step_nome_pop_123_1_1 a sop:Step ;
+    sop:name "Etapa 1" ;
+    sop:performedAt base:place_f5ddaf0c ;
+    sop:performedBy base:perf_a4a827fe .
+
+base:step_nome_pop_123_1_2 a sop:Step ;
+    sop:name "Etapa 2" ;
+    sop:performedAt base:place_f5ddaf0c ;
+    sop:performedBy base:perf_a4a827fe .
+
+base:term_9bd8cf6f a skos:Concept ;
+    skos:definition "Significado"^^xsd:string ;
+    skos:prefLabel "URAS"^^xsd:string .
+
+base:perf_a4a827fe a sop:RolePerformer ;
+    rdfs:label "Excutor" .
+
+base:place_f5ddaf0c a sop:SitePlace ;
+    rdfs:label "Local" .
+
