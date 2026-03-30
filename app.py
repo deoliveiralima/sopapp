@@ -11,10 +11,10 @@ app = Flask(__name__)
 CORS(app)
 
 # 1. Namespaces (Conforme sua ontologia pop_turtle.ttl)
-SOP = Namespace("https://purl.archive.org/sopontology/1.0/")
+SOP = Namespace("https://purl.archive.org/sopontology#")
 ORG = Namespace("http://www.w3.org/ns/org#")
 FOAF = Namespace("http://xmlns.com/foaf/0.1/")
-BASE = Namespace("http://iff.edu.br/saeg/sopontology/")
+BASE = Namespace("http://exemplo.org/iff#")
 SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
 
 # --- FUNÇÕES AUXILIARES ---
@@ -146,12 +146,17 @@ def save_rdf():
     step_uris = {} 
     for i, s in enumerate(data.get('steps', [])):
         s_idx = i + 1
-        # Usamos o pop_id (nome_versao) para manter as URIs das etapas vinculadas ao POP
-        step_uri = BASE[f"step_{pop_id}_{s_idx}"]
+        # ALTERADO: De pop_num para pop_id
+        step_uri = BASE[f"step_{pop_id}_{s_idx}"] 
         step_uris[str(s_idx)] = step_uri
         
         g.add((step_uri, RDF.type, SOP.Step))
         g.add((step_uri, SOP.name, Literal(s['name'])))
+        
+        # --- ADICIONE ESTA LINHA ABAIXO ---
+        # Como Step é subclasse de sopItem, ele herda o uso desta propriedade
+        g.add((step_uri, SOP.discriminator, Literal(s_idx, datatype=XSD.integer)))
+        
         g.add((pop_uri, SOP.includes, step_uri))
 
         for key, prop, cls_prefix in [('performer', SOP.performedBy, 'perf'), ('place', SOP.performedAt, 'place')]:
@@ -238,7 +243,7 @@ def view_page(pop_id):
 def get_all_pops():
     # Usamos o prefixo correto com # conforme sua ontologia
     sparql = """
-    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
+    PREFIX sop: <https://purl.archive.org/sopontology#>
     SELECT ?id ?name ?status WHERE {
         ?pop a sop:Sop ;
              sop:name ?name .
@@ -274,7 +279,7 @@ def get_pop_details(pop_id):
 
     # 🔹 2. Consulta principal
     sparql_main = f"""
-    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
+    PREFIX sop: <https://purl.archive.org/sopontology#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -331,14 +336,16 @@ def get_pop_details(pop_id):
             })
 
         elif p == str(SOP.includes):
+            # No seu loop de resultados, capture o discriminador para o passo também
             data["steps"].append({
                 "uri": o,
-                "name": label
+                "name": label,
+                "order": int(row.get('disc', {}).get('value', 99)) # Pega o ?disc da query SPARQL
             })
 
     # 🔹 4. Consulta ESPECÍFICA do glossário (AGORA SIM)
     sparql_terms = f"""
-    PREFIX sop: <https://purl.archive.org/sopontology/1.0/>
+    PREFIX sop: <https://purl.archive.org/sopontology#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
     SELECT ?label ?def WHERE {{
@@ -357,6 +364,7 @@ def get_pop_details(pop_id):
                 "name": row["label"]["value"],
                 "def": row.get("def", {}).get("value", "Sem definição disponível")
             })
+    data["steps"].sort(key=lambda x: x["order"])
 
     return jsonify(data)
 
