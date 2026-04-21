@@ -1,0 +1,165 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1 a sop:Sop ;
+    sop:approvalDate "2026-02-11"^^xsd:date ;
+    sop:approvedBy base:agent_5bcfba03 ;
+    sop:checkedBy base:agent_5bcfba03 ;
+    sop:classification base:concept_909681fd ;
+    sop:createdBy base:anaSilva ;
+    sop:creationDate "2026-02-10T00:00:00"^^xsd:dateTime ;
+    sop:description """As Precauções Padrão (PP) representam um conjunto de medidas
+que devem ser aplicadas no atendimento de todos os clientes, independente da
+suspeita ou não de infecções, e na manipulação de equipamentos e artigos
+contaminados ou sob suspeita de contaminação."""^^xsd:string ;
+    sop:includes base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_1,
+        base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_2,
+        base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_3,
+        base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_4,
+        base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_5,
+        base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_6 ;
+    sop:name "PRECAUÇÕES PADRÃO DURANTE A ASSISTÊNCIA AO CLIENTE"^^xsd:string ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:SetorEnfermagem ;
+    sop:responsible base:IFF ;
+    sop:sopItem base:item_0b08da57,
+        base:item_10cede87,
+        base:item_36e86b2c,
+        base:item_3b1c83f5,
+        base:item_3eba7168,
+        base:item_432bd232,
+        base:item_4f5f0bd8,
+        base:item_6acf4ce9,
+        base:item_726ff5d0,
+        base:item_73d7df00,
+        base:item_7a45c1bd,
+        base:item_7e9dc0dc,
+        base:item_8d3ec18d,
+        base:item_a7bb31f7,
+        base:item_aa9efb31,
+        base:item_b5cea841,
+        base:item_baa47cca,
+        base:item_cc5e3a49,
+        base:item_e3447d70 ;
+    sop:status sop:approved ;
+    sop:term base:term_c483f6ce ;
+    sop:version "1"^^xsd:string .
+
+base:concept_909681fd a skos:Concept ;
+    skos:prefLabel "Saúde"^^xsd:string .
+
+base:item_0b08da57 a sop:Note ;
+    sop:discriminator 4 ;
+    sop:name "Não utilizar jaleco ou avental comum como substituto do avental com finalidade de proteção contra agentes infecciosos." .
+
+base:item_10cede87 a sop:BibliographicReference ;
+    sop:discriminator 4 ;
+    sop:name "PREFEITURA MUNICIPAL DE CURITIBA. Secretaria Municipal da Saúde. Departamento de Urgência e Emergência. Manual de procedimentos operacionais padrão: POP precaução padrão. Curitiba, 2019." .
+
+base:item_36e86b2c a sop:Note ;
+    sop:discriminator 3 ;
+    sop:name "Realizar a troca das luvas entre os clientes e entre um procedimento e outro no mesmo cliente." .
+
+base:item_3b1c83f5 a sop:Material ;
+    sop:discriminator 5 ;
+    sop:name "Máscara" .
+
+base:item_3eba7168 a sop:Note ;
+    sop:discriminator 5 ;
+    sop:name "Se houver risco de contato com grandes volumes de sangue ou líquidos corporais, usar avental impermeável" .
+
+base:item_432bd232 a sop:Material ;
+    sop:discriminator 4 ;
+    sop:name "Óculos de proteção" .
+
+base:item_4f5f0bd8 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "As PP são recomendadas para aplicação em todas as situações e clientes, independente da presença de doença transmissível comprovada." .
+
+base:item_6acf4ce9 a sop:ExpectedResults ;
+    sop:discriminator 1 ;
+    sop:name "Fortalecer as orientações referentes às PP, minimizando os riscos à saúde ocupacional." .
+
+base:item_726ff5d0 a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "EMPRESA BRASILEIRA DE SERVIÇOS HOSPITALARES. Hospitais Universitários Federais. Procedimento Operacional Padrão: medidas de precaução e isolamento: POP/CCIH/005/2018. 2019. Disponível em: http://www2.ebserh.gov.br/documents/220250/4375831/POP+MEDIDAS+DE+PRE CAU%C3%87%C3%83O+EBSERH+2018-+ATUALIZADO.pdf/781dd1b3-faff-4b43- 9e80-ffd9973378fb. Acesso em: 05 ago. 2020." .
+
+base:item_73d7df00 a sop:Material ;
+    sop:discriminator 3 ;
+    sop:name "Avental" .
+
+base:item_7a45c1bd sop:discriminator 1 .
+
+base:item_7e9dc0dc a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Insumos para higienização das mãos" .
+
+base:item_8d3ec18d a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Orientar o desenvolvimento de práticas assistenciais seguras, evitando e reduzindo a transmissão de infecções e a ocorrência de acidentes de trabalho." .
+
+base:item_a7bb31f7 a sop:Note ;
+    sop:discriminator 6 ;
+    sop:name "Os óculos de proteção devem ser de uso individual. Após o uso realizar procedimento de limpeza e desinfecção, bem como armazenamento em local adequado." .
+
+base:item_aa9efb31 a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Luvas" .
+
+base:item_b5cea841 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "As PP deverão ser utilizadas quando existir o risco de contato com: sangue; todos os líquidos corpóreos, secreções e excreções, com exceção do suor, sem considerar a presença ou não de sangue visível; pele com solução de continuidade (pele não íntegra) e mucosas." .
+
+base:item_baa47cca a sop:BibliographicReference ;
+    sop:discriminator 5 ;
+    sop:name "UNIVERSIDADE FEDERAL DO TRIÂNGULO MINEIRO. Hospital de Clínicas. Procedimentos operacionais padrão (POP): POP. SVSSP.003: Precauções e isolamento. 2019. Disponível em: http://www2.ebserh.gov.br/documents/147715/0/POP+precau%2B%C2%BA%2B% C3%81es+e+isolamento+4.pdf/8ef38f83-4910-45a5-99b7-358299746751. Acesso em: 05 ago. 2020." .
+
+base:item_cc5e3a49 a sop:BibliographicReference ;
+    sop:discriminator 3 ;
+    sop:name "REFEITURA DE ASSIS (SP). Secretaria Municipal de Saúde. Normas e rotinas: NR 08; Precaução padrão e uso de EPI. In: PREFEITURA DE ASSIS (SP). Secretaria Municipal de Saúde. Procedimento Operacional Padrão (POP) e manual de normas e rotinas da atenção básica. Assis, SP, 2019. p. 111. Disponível em: https://saude.assis.sp.gov.br/uploads/documentos/9642218022020114206.pdf. Acesso em: 04 ago. 2020." .
+
+base:item_e3447d70 a sop:Material ;
+    sop:discriminator 6 ;
+    sop:name "Caixa de perfurocortantes" .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_1 a sop:Sop,
+        sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 1 ;
+    sop:name "HIGIENIZAÇÃO SIMPLES DAS MÃOS" .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Utilizar luvas sempre que houver risco de contato com sangue, fluido corporal, secreção, excreção, pele não íntegra e mucosa. Colocar as luvas imediatamente antes do contato com o cliente e retirá-las logo após o uso, descartando-as em lixo infectante." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:SetorEnfermagem .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Usar avental sempre que houver possibilidade de ocorrer contaminação por sangue, fluido corporal, secreção e excreções, para proteger roupas e superfícies corporais, bem como evitar vinculação de micro-organismos patogênicos fora do ambiente de trabalho." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:SetorEnfermagem .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Colocar óculos de proteção quando o procedimento oferecer risco de respingos de sangue, fluido corporal, secreções e excreções à mucosa ocular." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:SetorEnfermagem .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Utilizar máscara para proteger a face do profissional (nariz e boca) durante a realização de procedimentos com possibilidade de respingos de material biológico e sempre que houver risco de contágio de patologias por meio de gotículas/aerossóis pelas vias áreas superiores." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:SetorEnfermagem .
+
+base:step_precaucoes_padrao_durante_a_assistencia_ao_cliente_4_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Ter cuidado com a manipulação e descarte de agulhas, bisturis e outros materiais perfurocortantes. Não retirar agulhas usadas das seringas descartáveis, não dobrá-las e nunca reencapá-las. O descarte desses materiais deve ser feito em recipientes apropriados, rígidos e resistentes à perfuração. Seguir as orientações para montagem desses recipientes e nunca ultrapassar o limite indicado pela linha tracejada, a saber, 2/3 de sua capacidade." .
+
+base:term_c483f6ce a skos:Concept ;
+    skos:definition "Precauções Padrão"^^xsd:string ;
+    skos:prefLabel "PP"^^xsd:string .
+

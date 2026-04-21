@@ -1,0 +1,94 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1 a sop:Sop ;
+    sop:approvalDate "2025-05-05"^^xsd:date ;
+    sop:approvedBy base:helberSantos ;
+    sop:checkedBy base:helberSantos ;
+    sop:classification base:concept_043053c6 ;
+    sop:createdBy base:agent_9ef7d85e ;
+    sop:creationDate "2025-05-05T00:00:00"^^xsd:dateTime ;
+    sop:description """A autenticação de dois fatores é uma camada extra de proteção que ajuda a evitar acessos indevidos, mesmo que a senha do usuário seja descoberta. Também conhecido pelas siglas 2FA ou MFA, com ela, além da senha, o sistema solicitará um segundo fator de verificação para acessar um sistema, normalmente um código gerado por aplicativo no celular.
+Essa prática é amplamente utilizada em ambientes corporativos e governamentais como medida básica de proteção contra ataques cibernéticos."""^^xsd:string ;
+    sop:includes base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_1,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_2,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_3,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_4,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_5,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_6,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_7,
+        base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_8 ;
+    sop:name "ativar e usar a autenticação de 2 fatores (2FA) no SUAP"^^xsd:string ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF ;
+    sop:responsible base:DGTIREIT ;
+    sop:status sop:approved ;
+    sop:term base:term_043053c6,
+        base:term_e0cc48d3 ;
+    sop:version "1"^^xsd:string .
+
+base:agent_9ef7d85e a foaf:SpatialThing ;
+    foaf:name "Fernan" .
+
+base:concept_043053c6 a skos:Concept ;
+    skos:prefLabel "SUAP"^^xsd:string .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Comece instalando no seu celular o aplicativo Google Authenticator, Microsoft Authenticator ou outro aplicativo de autenticação via OTP. Você os encontra na sua loja de aplicativos." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Acesse o SUAP e se autentique normalmente com usuário e senha." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Na tela inicial, clique no ícone ao lado da sua foto/nome para acessar a página \"Minha Conta\"." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "No quadro “Autenticação por dois fatores”, clique na mensagem \"Habilitar autenticação com dois fatores”. Um QR Code será gerado automaticamente" ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Acesse o aplicativo que você acabou de instalar no seu celular e clique no ícone de leitura de QR-Code." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Com o aplicativo do seu celular, escaneie o QR Code exibido na tela do SUAP." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Na tela do SUAP informe no campo \"Código\" o código disponibilizado pelo seu aplicativo." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:step_ativar_e_usar_a_autenticacao_de_2_fatores_2fa_no_suap_1_1_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name "Ao informar o código, você será redirecionado para a página “Minha Conta” com a confirmação “A autenticação por dois fatores está habilitada” na parte superior da tela." ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:IFF .
+
+base:term_043053c6 a skos:Concept ;
+    skos:definition "Sistema Unificado de Administração Pública"^^xsd:string ;
+    skos:prefLabel "SUAP"^^xsd:string .
+
+base:term_e0cc48d3 a skos:Concept ;
+    skos:definition "verificação em duas etapas"^^xsd:string ;
+    skos:prefLabel "2FA"^^xsd:string .
+
