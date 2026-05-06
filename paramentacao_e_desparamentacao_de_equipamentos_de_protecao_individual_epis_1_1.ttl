@@ -1,0 +1,279 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1 a sop:Sop ;
+    sop:approvalDate "2026-04-10"^^xsd:date ;
+    sop:approvedBy base:CSSTREIT ;
+    sop:createdBy base:CSCC ;
+    sop:creationDate "2026-04-10T00:00:00"^^xsd:dateTime ;
+    sop:description "É um processo que visa proporcionar segurança aos profissionais no desenvolvimento de suas atividades, bem como aos clientes, evitando e reduzindo os riscos à saúde."^^xsd:string ;
+    sop:hasClassification base:concept_76ac44c4,
+        base:concept_909681fd,
+        base:concept_cb12b78a ;
+    sop:hasItem base:item_00cb8e68,
+        base:item_052e1126,
+        base:item_10f344fd,
+        base:item_223c099f,
+        base:item_31478545,
+        base:item_4ed522b3,
+        base:item_50954964,
+        base:item_6ba9486b,
+        base:item_73d7df00,
+        base:item_816179db,
+        base:item_8d3bd6f6,
+        base:item_8d6d64a9,
+        base:item_8fdb5b2b,
+        base:item_9587828b,
+        base:item_96c6abe9,
+        base:item_9d4fbc99,
+        base:item_a2bcd28f,
+        base:item_ab713529,
+        base:item_aebabad8,
+        base:item_b6b43864,
+        base:item_bf55a73d,
+        base:item_c195b15a,
+        base:item_d29d3474,
+        base:item_ea002211 ;
+    sop:hasResponsible base:IFF ;
+    sop:hasSection base:section_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1,
+        base:section_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2 ;
+    sop:hasStatus sop:approved ;
+    sop:hasTerm base:term_d0f92a90 ;
+    sop:name "Paramentação e desparamentação de Equipamentos de Proteção Individual (EPIs)"^^xsd:string ;
+    sop:performedAt base:CASCCG,
+        base:CASCQ,
+        base:CSBCM,
+        base:CSCBJI,
+        base:CSCC,
+        base:CSSTREIT ;
+    sop:performedBy base:roleAuxiliarDeEnfermagem,
+        base:roleEnfermeiro,
+        base:roleTecnicoEmEnfermagem ;
+    sop:version "1"^^xsd:string .
+
+base:concept_76ac44c4 a skos:Concept ;
+    skos:prefLabel "Higienização"^^xsd:string .
+
+base:concept_909681fd a skos:Concept ;
+    skos:prefLabel "Saúde"^^xsd:string .
+
+base:concept_cb12b78a a skos:Concept ;
+    skos:prefLabel "Enfermagem"^^xsd:string .
+
+base:item_00cb8e68 a sop:Note ;
+    sop:discriminator 4 ;
+    sop:name "Verificação positiva da vedação: - Expire profundamente. Uma pressão positiva dentro da máscara significa que não tem vazamento. - Se houver vazamento, ajuste a posição e/ou as alças de tensão. Teste novamente a vedação. - Repita os passos até que a máscara esteja vedada corretamente." .
+
+base:item_052e1126 a sop:BibliographicReference ;
+    sop:discriminator 1 ;
+    sop:name "BRASIL. Agência Nacional de Vigilância Sanitária. Nota técnica GVIMS/GGTES/ANVISA nº 04/2020. Orientações para serviços de saúde: medidas de prevenção e controle que devem ser adotadas durante a assistência aos casos suspeitos ou confirmados de infecção pelo novo coronavírus (SARS-CoV-2). 2020. Disponível em: http://portal.anvisa.gov.br/documents/33852/271858/Nota+T%C3%A9cnica+n+04- 2020+GVIMS-GGTES-ANVISA/ab598660-3de4-4f14-8e6f-b9341c196b28. Acesso em: 30 jul. 2020." .
+
+base:item_10f344fd a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Padronizar o processo de paramentação e desparamentação dos EPIs utilizados durante o atendimento." .
+
+base:item_223c099f a sop:Note ;
+    sop:discriminator 9 ;
+    sop:name "Se no processo de remoção da máscara houver contaminação da parte interna, ela deverá ser descartada imediatamente. O descarte deverá ser feito em lixo infectante." .
+
+base:item_31478545 a sop:Note ;
+    sop:discriminator 11 ;
+    sop:name "Inspecionar visualmente a máscara N95/PFF2 ou equivalente, antes de cada uso, para avaliar se sua integridade foi comprometida. Máscaras úmidas, sujas, rasgadas, amassadas ou com vincos, devem ser imediatamente descartadas." .
+
+base:item_4ed522b3 a sop:BibliographicReference ;
+    sop:discriminator 5 ;
+    sop:name "UNIVERSIDADE FEDERAL DO PIAUÍ. Hospital Universitário. Procedimento operacional padrão: POP.UVS.001: Paramentação e desparamentação no atendimento à pacientes com suspeita/confirmação de Covid-19. Teresina: EBSERH, 2020. p. 18-21. Disponível em: http://www2.ebserh.gov.br/documents/16824/1864622/BS_402_HU-UFPI-wold- .pdf/c85c8445-5ab2-4200-bef0-4dac1d8575b4. Acesso em: 03 ago. 2020." .
+
+base:item_50954964 a sop:Note ;
+    sop:discriminator 8 ;
+    sop:name "Acondicione a máscara em um saco ou envelope de papel com os elásticos para fora, para que não haja contaminação das tiras elásticas e para facilitar a retirada posteriormente, no caso de reutilização. O envelope com a máscara não pode ser hermeticamente fechado e deve ser identificado com o nome do usuário, data da primeira utilização da máscara e guardado em locais adequados, secos e ventilados." .
+
+base:item_6ba9486b a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Caso algum EPI esteja com sujidade aparente ou altamente contaminado inicie a remoção por esse dispositivo." .
+
+base:item_73d7df00 a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Avental" .
+
+base:item_816179db a sop:Note ;
+    sop:discriminator 10 ;
+    sop:name "Deverão ser consideradas as orientações do fabricante no que se refere ao tempo de uso/número de reutilizações da máscara N95/PFF2 ou equivalente." .
+
+base:item_8d3bd6f6 a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "BRASIL. Ministério da Saúde. Secretaria de Atenção Primária à Saúde (SAPS). POP Equipamento de proteção individual e segurança no trabalho para profissionais de saúde da APS no atendimento às pessoas com suspeita ou infecção pelo novo coronavírus (Covid-19). Disponível em: https://portalarquivos.saude.gov.br/images/pdf/2020/marco/30/20200330-POP-EPIver002-Final.pdf. Acesso em: 30 jul. 2020." .
+
+base:item_8d6d64a9 a sop:Material ;
+    sop:discriminator 3 ;
+    sop:name "Luvas de procedimento ou estéreis (conforme procedimento a ser realizado)" .
+
+base:item_8fdb5b2b a sop:Note ;
+    sop:discriminator 3 ;
+    sop:name "Cuidados na colocação da máscara N95/PFF2: a) Higienizar as mãos; b) Segurar o respirador com o clip nasal próximo à ponta dos dedos deixando as alças pendentes; c) Encaixar o respirador sob o queixo; d) Posicionar uma das alças na nuca e a outra na cabeça; e) Ajustar o clip nasal no nariz; f) Verificar a vedação pelo teste de pressão positiva e negativa." .
+
+base:item_9587828b a sop:BibliographicReference ;
+    sop:discriminator 4 ;
+    sop:name "UNIVERSIDADE FEDERAL DE CAMPINA GRANDE. Hospital Universitário Júlio Bandeira de Mello. Procedimento/Rotina: POP.SOST.001: Paramentação e desparamentação no atendimento à pacientes com suspeita/confirmação de Covid- 19. Campina Grande, PB: EBSERH, 2020. Disponível em: http://www2.ebserh.gov.br/documents/1132097/4926566/POP.SOST.001+- +PARAMENTA%C3%87%C3%83O+E+DESPARAMENTAC%C3%83O+%28COVI D-19%29.pdf/fbfaad3f-1913-4970-b668-f00f4f42cd4f. Acesso em: 03 ago. 2020." .
+
+base:item_96c6abe9 a sop:Note ;
+    sop:discriminator 7 ;
+    sop:name "Etapas para a retirada da máscara N95/PFF2: a) Higienizar as mãos; b) Segurar o elástico inferior passando-o por cima da cabeça para removê-lo; c) Segurar o elástico superior passando-o por cima da cabeça para removê-lo; d) Para remover a máscara, retire-a pelos elásticos, tomando bastante cuidado para nunca tocar na superfície interna; e) Higienizar as mãos." .
+
+base:item_9d4fbc99 a sop:Material ;
+    sop:discriminator 4 ;
+    sop:name "Máscara cirúrgica" .
+
+base:item_a2bcd28f a sop:Material ;
+    sop:discriminator 6 ;
+    sop:name "Óculos de proteção e/ou protetor facial" .
+
+base:item_ab713529 a sop:BibliographicReference ;
+    sop:discriminator 3 ;
+    sop:name "CONSELHO FEDERAL DE ENFERMAGEM. COVID-19: orientações sobre a colocação e retirada dos equipamentos de proteção individual (EPIs). 2020. Disponível em: http://www.cofen.gov.br/wpcontent/uploads/2020/03/cartilha_epi.pdf. Acesso em: 30 jul. 2020." .
+
+base:item_aebabad8 a sop:Material ;
+    sop:discriminator 5 ;
+    sop:name "Máscara N95 ou PFF2" .
+
+base:item_b6b43864 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "A higienização das mãos durante o processo de paramentação e desparamentação pode ser feita com água e sabonete líquido (POP 01) ou formulação alcoólica a 70% (POP 02)." .
+
+base:item_bf55a73d a sop:ExpectedResults ;
+    sop:discriminator 1 ;
+    sop:name "Consolidar as orientações de proteção dos profissionais, minimizando os riscos à saúde ocupacional." .
+
+base:item_c195b15a a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Gorro/Touca descartável" .
+
+base:item_d29d3474 a sop:Note ;
+    sop:discriminator 5 ;
+    sop:name "Verificação negativa da vedação: - Inspire profundamente. Se não houver vazamento, a pressão negativa fará o respirador agarrar-se ao rosto. - O vazamento resultará em perda de pressão negativa na máscara devido à entrada de ar através de lacunas na vedação." .
+
+base:item_ea002211 a sop:Note ;
+    sop:discriminator 6 ;
+    sop:name "Se não for possível realizar uma verificação bem-sucedida da vedação da máscara na face do usuário (teste positivo e negativo de vedação da máscara na face), a máscara deverá ser descartada imediatamente." .
+
+base:section_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_1,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_2,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_3,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_4,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_5,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_6,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_7,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_8 ;
+    sop:name "Sequência de Paramentação"^^xsd:string .
+
+base:section_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_1,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_10,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_11,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_12,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_2,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_3,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_4,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_5,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_6,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_7,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_8,
+        base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_9 ;
+    sop:name "Sequência de Desparamentação"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Reunir o material necessário"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_2 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 2 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Vestir o avental primeiramente pelas mangas, ajustando as amarras nas costas e cintura. Certifique-se de que o tronco esteja totalmente coberto, bem como os braços e os punhos. Lembre-se: Nunca amarre o avental pela frente."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Colocar a máscara (cirúrgica ou N95 conforme atividade ou procedimento a ser realizado)."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_5 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 5 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Se óculos de proteção → Colocar óculos de proteção → 7. Colocar gorro/touca Se protetor facial → Colocar gorro/touca → 7. Colocar protetor facial"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Higienizar as mãos."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_1_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name " Calçar as luvas conforme procedimento a ser realizado e ajustá-las até cobrir o punho do avental."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Retirar as luvas de procedimento ou estéreis; (Retire a primeira luva puxando-a pelo lado externo do punho com os dedos da mão oposta → Segure a luva removida com a outra mão enluvada → Toque a parte interna do punho da mão enluvada com o dedo indicador oposto (sem luvas) e retire a outra luva, deixando a primeira luva dentro da segunda → Descarte as luvas na lixeira de resíduo infectante)."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_10 a sop:Step ;
+    sop:discriminator 10 ;
+    sop:name "Retirar as luvas e descartar em lixo infectante."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_11 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 11 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_12 a sop:Step ;
+    sop:discriminator 12 ;
+    sop:name "Retirar a máscara pelas tiras/elástico evitando tocar na parte da frente e higienizar as mãos novamente."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_2 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 2 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Retirar o avental descartável com cuidado para não contaminar a roupa; (Abra as tiras e solte as amarras → Empurre pelo pescoço e pelos ombros de forma segura sem movimentos bruscos para não levantar gotículas, toque apenas na parte interna do avental → Retire o avental pelo avesso → Despreze no lixo infectante)."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_4 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 4 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Remover o gorro/touca puxando pela parte posterior da cabeça e descartar em lixo infectante. Obs.: Se estiver utilizando protetor facial removê-lo antes do gorro."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_6 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 6 ;
+    sop:name "Higienização simples das mãos"^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Calçar luvas de procedimento."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name "Remover os óculos de proteção tocando delicadamente na extremidade lateral, próximo a região auricular."^^xsd:string .
+
+base:step_paramentacao_e_desparamentacao_de_equipamentos_de_protecao_individual_epis_1_1_2_9 a sop:Step ;
+    sop:discriminator 9 ;
+    sop:name "Realizar a limpeza e desinfecção dos óculos e/ou protetor facial conforme descrito: I. Utilizar água e sabão/detergente; II. Secar manualmente com material absorvente limpo e macio; III. Desinfetar por três vezes com álcool a 70% → borrifar e realizar a fricção por 30 segundos iniciando pela parte interna e depois externa, atentando-se para realizar o movimento em sentido unidirecional, do menos contaminado para o mais contaminado; IV. Embalar ou armazenar em recipiente limpo destinado para sua guarda."^^xsd:string .
+
+base:term_d0f92a90 a skos:Concept ;
+    skos:definition "Equipamentos de Proteção Individual"^^xsd:string ;
+    skos:prefLabel "EPI"^^xsd:string .
+

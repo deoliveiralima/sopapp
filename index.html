@@ -11,6 +11,13 @@
         .step-entry { border-left: 5px solid #0d6efd; background-color: white; }
         .gen-label { transition: all 0.3s; }
         .category-header { border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-top: 20px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .tree-list { list-style-type: none; padding-left: 20px; }
+        .tree-root { padding-left: 0; }
+        .tree-node { margin: 5px 0; }
+        .tree-toggler { cursor: pointer; color: #0d6efd; width: 20px; display: inline-block; font-weight: bold;}
+        .tree-label { cursor: pointer; padding: 3px 6px; border-radius: 4px; transition: background 0.2s;}
+        .tree-label:hover { background-color: #e9ecef; }
+    
     </style>
 </head>
 <body>
@@ -33,26 +40,40 @@
                         <input type="number" class="form-control" name="number">
                     </div>
                     <div class="col-12">
-                        <label class="form-label fw-bold">Organizações Responsáveis (Busca no GraphDB)</label>
-                        <div id="responsible_container">
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control org-input" 
-                                    list="orgOptions" 
-                                    placeholder="Digite para buscar uma organização..."
-                                    name="responsible_org_display[]">
-                                
-                                <input type="hidden" name="responsible_org_uri[]" class="org-uri">
-                                
-                                <button type="button" class="btn btn-outline-primary" onclick="addOrganizationField()">+</button>
+    <label class="form-label fw-bold">Organizações Responsáveis (Hierarquia GraphDB)</label>
+    
+    <div class="card p-3 bg-light border" style="border-style: dashed !important;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small"><i class="bi bi-info-circle"></i> Adicione as organizações responsáveis por este POP.</span>
+            <button type="button" class="btn btn-sm btn-primary shadow-sm" onclick="openTreeModal('selected_orgs_container', 'responsible_org', 'org')">
+                <i class="bi bi-diagram-3"></i> Adicionar Organização
+            </button>
+        </div>
+        
+        <div id="selected_orgs_container" class="d-flex flex-wrap gap-2">
+            </div>
+    </div>
+</div>
+
+                    <div class="modal fade" id="treeModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title fs-6"><i class="bi bi-diagram-3"></i> Estrutura Organizacional</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" id="treeSearchInput" class="form-control mb-3" placeholder="Buscar setor..." onkeyup="filterTree()">
+                                    <div id="treeContainer" class="p-2">Carregando árvore...</div>
+                                </div>
                             </div>
                         </div>
-                        <datalist id="orgOptions"></datalist>
                     </div>
                      <div class="col-12">
                     <label class="form-label fw-bold">Classificações / Áreas (skos:Concept)</label>
                     <div id="classification_container">
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control class-input" name="classification[]" 
+                            <input type="text" required class="form-control class-input" name="classification[]" 
                                 list="classOptions" placeholder="Ex: Higienização, Administrativo">
                             <button type="button" class="btn btn-outline-primary" onclick="addListField('classification_container', 'classification[]', 'class-input', 'classOptions')">+</button>
                         </div>
@@ -63,7 +84,7 @@
                         <label class="form-label">Versão (sop:version)</label>
                         <input type="text" class="form-control" name="version" placeholder="1.0">
                     </div>
-                    <div class="col-md-4"><label class="form-label text-muted small">Criação</label><input type="date" class="form-control" name="creationDate"></div>
+                    <div class="col-md-4"><label class="form-label text-muted small">Criação</label><input type="date" required class="form-control" name="creationDate"></div>
                     <div class="col-md-4"><label class="form-label text-muted small">Aprovação</label><input type="date" class="form-control" name="approvalDate"></div>
                     <div class="col-md-4"><label class="form-label text-muted small">Revisão</label><input type="date" class="form-control" name="revisionDate"></div>
                     <div class="col-md-6">
@@ -71,7 +92,7 @@
                         <select class="form-select" name="status">
                             <option value="draft">Rascunho (Draft)</option>
                             <option value="approved">Aprovado (Approved)</option>
-                            <option value="published">Publicado (Published)</option>
+                            
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -116,90 +137,64 @@
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="category-header">Elaborado por</div>
-                        <div id="creator_container">
-                            <div class="p-2 border rounded bg-light mb-2 position-relative">
-                                <input type="text" class="form-control form-control-sm agent-input" 
-                                    name="creator_name[]" list="agentOptions" placeholder="Buscar agente...">
-                                
-                                <input type="hidden" name="creator_type[]" class="agent-type-input" value="Person">
-                                <input type="hidden" name="creator_uri[]" class="agent-uri-hidden">
-                                
-                                <span class="badge bg-secondary agent-type-badge" style="font-size: 0.7rem">Novo Agente</span>
-                            </div>
+                        <div class="p-2 border rounded bg-light mb-2" style="min-height: 50px; border-style: dashed !important;">
+                            <div id="creator_tags_container" class="d-flex flex-wrap gap-2"></div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="addAgentField('creator_container', 'creator')">+</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100" 
+                                onclick="openTreeModal('creator_tags_container', 'creator', 'agent')">
+                            <i class="bi bi-person-plus"></i> Adicionar Elaborador
+                        </button>
                     </div>
-                    <datalist id="agentOptions"></datalist>
-
 
                     <div class="col-md-4">
                         <div class="category-header">Revisado Por</div>
-                        <div id="checker_container">
-                            <div class="p-2 border rounded bg-light mb-2 position-relative">
-                                <input type="text" class="form-control form-control-sm agent-input" 
-                                    name="checker_name[]" list="agentOptions" placeholder="Buscar agente...">
-                                
-                                <input type="hidden" name="checker_type[]" class="agent-type-input" value="Person">
-                                <input type="hidden" name="checker_uri[]" class="agent-uri-hidden">
-                                <span class="badge bg-secondary agent-type-badge" style="font-size: 0.7rem">Novo Agente</span>
-                            </div>
+                        <div class="p-2 border rounded bg-light mb-2" style="min-height: 50px; border-style: dashed !important;">
+                            <div id="checker_tags_container" class="d-flex flex-wrap gap-2"></div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="addAgentField('checker_container', 'checker')">+</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100" 
+                                onclick="openTreeModal('checker_tags_container', 'checker', 'agent')">
+                            <i class="bi bi-person-check"></i> Adicionar Revisor
+                        </button>
                     </div>
                     
                     <div class="col-md-4">
                         <div class="category-header">Aprovador Por</div>
-                        <div id="approver_container">
-                            <div class="p-2 border rounded bg-light mb-2 position-relative">
-                                <input type="text" class="form-control form-control-sm agent-input" 
-                                    name="approver_name[]" list="agentOptions" placeholder="Buscar agente...">
-                                
-                                <input type="hidden" name="approver_type[]" class="agent-type-input" value="Person">
-                                <input type="hidden" name="approver_uri[]" class="agent-uri-hidden">
-                                <span class="badge bg-secondary agent-type-badge" style="font-size: 0.7rem">Novo Agente</span>
-                            </div>
+                        <div class="p-2 border rounded bg-light mb-2" style="min-height: 50px; border-style: dashed !important;">
+                            <div id="approver_tags_container" class="d-flex flex-wrap gap-2"></div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="addAgentField('approver_container', 'approver')">+</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100" 
+                                onclick="openTreeModal('approver_tags_container', 'approver', 'agent')">
+                            <i class="bi bi-person-fill-check"></i> Adicionar Aprovador
+                        </button>
                     </div>
-
-
                 </div>
             </div>
         </div>
 
         <div class="card mb-4 border-primary shadow-sm">
-            <div class="card-header bg-primary text-white fw-bold text-center small">PADRÕES GERAIS DE EXECUÇÃO</div>
+            <div class="card-header bg-primary text-white fw-bold text-center small">PADRÕES GERAIS DE EXECUÇÃO (MÚLTIPLOS)</div>
             <div class="card-body bg-light row g-3">
+                
                 <div class="col-md-6">
-                    <label class="small fw-bold">Executor Padrão</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-sm step-perf-name" 
-                            id="general_performer_name" 
-                            list="performerOptions" 
-                            oninput="updateStepDefaults()" 
-                            placeholder="Buscar executor..."> 
-                        
-                        <input type="hidden" id="general_performer_type" value="RolePerformer">
-                        <input type="hidden" id="general_performer_uri"> 
-                    
+                    <label class="small fw-bold">Executores Padrão (sop:Performer)</label>
+                    <div class="p-2 border rounded bg-white mb-2" style="min-height: 45px; border-style: dashed !important;">
+                        <div id="general_performers_container" class="d-flex flex-wrap gap-2"></div>
                     </div>
+                    <button type="button" class="btn btn-sm btn-primary w-100" 
+                            onclick="openTreeModal('general_performers_container', 'general_performer', 'performer')">
+                        <i class="bi bi-diagram-3"></i> Adicionar Executor
+                    </button>
                 </div>
-               
 
                 <div class="col-md-6">
-                    <label class="small fw-bold">Local Padrão</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-sm step-place-name" 
-                            id="general_place_name" 
-                            list="placeOptions" 
-                            oninput="updateStepDefaults()" 
-                            placeholder="Buscar local...">
-                        
-                        <input type="hidden" id="general_place_type" value="SitePlace">
-                        <input type="hidden" id="general_place_uri">
-                        
-
+                    <label class="small fw-bold">Locais Padrão (sop:Place)</label>
+                    <div class="p-2 border rounded bg-white mb-2" style="min-height: 45px; border-style: dashed !important;">
+                        <div id="general_places_container" class="d-flex flex-wrap gap-2"></div>
                     </div>
+                    <button type="button" class="btn btn-sm btn-primary w-100" 
+                            onclick="openTreeModal('general_places_container', 'general_place', 'place')">
+                        <i class="bi bi-diagram-3"></i> Adicionar Local
+                    </button>
                 </div>
             </div>
         </div>
@@ -276,11 +271,206 @@
         </div>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script>
     let stepCount = 0;
     let sopItemsList = [];
      let sectionCount = 0; // Novo contador para seções
+    // Variável para saber qual campo de input pediu para abrir a árvore
+let currentTreeTargetInput = null;
+let currentTreeTargetHidden = null;
+
+// Constrói a árvore transformando a lista plana do SPARQL em nós
+function buildTreeData(flatData) {
+    const rootNodes = [];
+    const lookup = {};
+
+    // Cria os nós base
+    flatData.forEach(item => {
+        lookup[item.uri.value] = { 
+            uri: item.uri.value, 
+            name: item.name.value, 
+            parentUri: item.parentUri ? item.parentUri.value : null,
+            children: [] 
+        };
+    });
+
+    // Conecta os filhos aos pais
+    Object.values(lookup).forEach(node => {
+        if (node.parentUri && lookup[node.parentUri]) {
+            lookup[node.parentUri].children.push(node);
+        } else {
+            rootNodes.push(node);
+        }
+    });
+
+    return rootNodes;
+}
+
+// Gera o HTML da árvore recursivamente
+function generateTreeHTML(nodes, isRoot = true) {
+    let html = `<ul class="tree-list ${isRoot ? 'tree-root' : ''}">`;
+    nodes.forEach(node => {
+        const hasChildren = node.children.length > 0;
+        const icon = hasChildren ? '<i class="bi bi-dash-square tree-toggler" onclick="toggleTreeNode(this)"></i>' : '<span style="width:20px; display:inline-block"></span>';
+        
+        // Define ícone baseado no tipo (foaf:Person, foaf:Group ou Setores)
+        let typeIcon = 'bi-person';
+        if (node.type === 'OrganizationalUnit' || node.type === 'FormalOrganization') typeIcon = 'bi-building';
+        if (node.type === 'Group') typeIcon = 'bi-people';
+
+        html += `
+        <li class="tree-node text-dark" data-name="${node.name.toLowerCase()}">
+            ${icon}
+            <span class="tree-label" onclick="confirmTreeSelection('${node.uri}', '${node.name}', '${node.type}')">
+                <i class="bi ${typeIcon} text-secondary"></i> ${node.name}
+                ${node.type ? `<small class="text-muted" style="font-size:0.6rem">(${node.type})</small>` : ''}
+            </span>
+            ${hasChildren ? generateTreeHTML(node.children, false) : ''}
+        </li>`;
+    });
+    html += `</ul>`;
+    return html;
+}
+
+// Abre o Modal e injeta a árvore lá dentro
+// Modificado para receber o ID do cesto, o prefixo do input e o tipo de árvore
+function openTreeModal(targetPrefix, inputPrefix, type) {
+    // targetPrefix: ID base dos inputs ou container de tags
+    // inputPrefix: Nome do campo no formulário
+    // type: 'org', 'agent', 'performer' ou 'place'
+
+    currentTreeTargetPrefix = targetPrefix; // Guardamos para saber onde devolver o valor
+    currentTreeInputPrefix = inputPrefix;
+
+    let treeData = [];
+    if (type === 'org') treeData = buildTreeData(globalData.orgs);
+    else if (type === 'agent') treeData = buildTreeData(globalData.agents);
+    else if (type === 'performer') treeData = buildTreeData(globalData.performers);
+    else if (type === 'place') treeData = buildTreeData(globalData.places);
+
+    document.getElementById('treeContainer').innerHTML = generateTreeHTML(treeData);
+    new bootstrap.Modal(document.getElementById('treeModal')).show();
+}
+
+// Ação de Expandir/Recolher pastas
+function toggleTreeNode(iconEl) {
+    const parentLi = iconEl.closest('li');
+    const childUl = parentLi.querySelector('ul');
+    if (childUl) {
+        if (childUl.style.display === 'none') {
+            childUl.style.display = 'block';
+            iconEl.classList.replace('bi-plus-square', 'bi-dash-square');
+        } else {
+            childUl.style.display = 'none';
+            iconEl.classList.replace('bi-dash-square', 'bi-plus-square');
+        }
+    }
+}
+
+function confirmTreeSelection(uri, name, type) {
+    const container = document.getElementById(currentTreeTargetPrefix);
+    
+    // 1. Verifica se já existe para evitar duplicado
+    if (container.querySelector(`input[value="${uri}"]`)) {
+        alert("Este item já foi adicionado!");
+        return;
+    }
+
+    // 2. Cria a etiqueta (badge)
+    const badgeHtml = `
+        <div class="badge bg-white text-dark border border-secondary p-1 d-flex align-items-center shadow-sm" style="font-size: 0.75rem;">
+            <span class="me-1">${name}</span>
+            <input type="hidden" name="${currentTreeInputPrefix}_name[]" value="${name}">
+            <input type="hidden" name="${currentTreeInputPrefix}_uri[]" value="${uri}">
+            <input type="hidden" name="${currentTreeInputPrefix}_type[]" value="${type}">
+            <button type="button" class="btn-close ms-1" style="font-size: 0.4rem;" onclick="removeAndSync(this)"></button>
+        </div>`;
+    
+    container.insertAdjacentHTML('beforeend', badgeHtml);
+
+    // 3. PROPAGAÇÃO: Se eu mudei o POP, pergunto se quer atualizar as Seções.
+    // Se mudei a Seção, pergunto se quer atualizar as etapas dela.
+    propagateChanges(currentTreeTargetPrefix);
+
+    bootstrap.Modal.getInstance(document.getElementById('treeModal')).hide();
+}
+
+function removeAndSync(btn) {
+    // Busca o container pai que contém o termo "_container" no ID
+    const container = btn.closest('[id*="_container"]');
+    
+    if (!container) {
+        console.error("Container de etiquetas não encontrado!");
+        return;
+    }
+
+    const containerId = container.id;
+
+    // 1. Remove a etiqueta visualmente
+    btn.parentElement.remove();
+
+    // 2. Dispara a propagação (usando timeout para garantir que o DOM atualizou)
+    setTimeout(() => {
+        propagateChanges(containerId);
+    }, 10);
+}
+function propagateChanges(sourceId) {
+    const sourceElement = document.getElementById(sourceId);
+    if (!sourceElement) return;
+
+    const content = sourceElement.innerHTML;
+    const isPerformer = sourceId.includes('performer');
+    const type = isPerformer ? 'performers' : 'places';
+
+    // CENÁRIO A: Mudança no POP (Geral) -> Replica para TUDO abaixo
+    if (sourceId.startsWith('general_')) {
+        if (confirm(`Deseja aplicar esta lista atualizada do POP para todas as Seções e Etapas?`)) {
+            document.querySelectorAll(`[id*="section_${type}_container_"]`).forEach(el => el.innerHTML = content);
+            document.querySelectorAll(`[id*="step_${type}_container_"]`).forEach(el => el.innerHTML = content);
+        }
+    }
+    
+    // CENÁRIO B: Mudança na SEÇÃO -> Replica apenas para as Etapas dessa seção
+    else if (sourceId.startsWith('section_')) {
+        const parts = sourceId.split('_');
+        const secId = parts[parts.length - 1]; // Pega o número final (ex: 1)
+
+        if (confirm(`Deseja replicar esta lista da Seção para todas as suas Etapas?`)) {
+            const sectionDiv = document.getElementById(`section_${secId}`);
+            if (sectionDiv) {
+                sectionDiv.querySelectorAll(`[id*="step_${type}_container_"]`).forEach(el => el.innerHTML = content);
+            }
+        }
+    }
+}
+
+
+// Filtro rápido de pesquisa dentro do Modal
+function filterTree() {
+    const term = document.getElementById('treeSearchInput').value.toLowerCase();
+    const nodes = document.querySelectorAll('.tree-node');
+    
+    nodes.forEach(node => {
+        const name = node.getAttribute('data-name');
+        if (name.includes(term)) {
+            node.style.display = '';
+            // Se achou, garante que as pastas pais fiquem abertas
+            let parent = node.parentElement.closest('.tree-node');
+            while(parent) {
+                parent.style.display = '';
+                parent.querySelector('ul').style.display = 'block';
+                parent.querySelector('.tree-toggler').classList.replace('bi-plus-square', 'bi-dash-square');
+                parent = parent.parentElement.closest('.tree-node');
+            }
+        } else {
+            node.style.display = 'none';
+        }
+    });
+}
+
 
     const itemCategories = {
         'Objective': { label: 'Objetivos', class: 'bg-primary' },
@@ -438,30 +628,56 @@
     function addSection() {
         sectionCount++;
         const container = document.getElementById('sectionsContainer');
+        
+        // Pegamos os valores atuais do POP (Padrão Geral) para serem os valores iniciais da seção
+        const popPerfs = document.getElementById('general_performers_container').innerHTML;
+        const popPlaces = document.getElementById('general_places_container').innerHTML;
+
         const html = `
-            <div class="section-entry card mb-4 shadow-sm border-0" id="section_${sectionCount}">
-                <div class="card-header bg-white border-bottom-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center w-75">
-                        <h5 class="mb-0 me-3 section-title-display text-secondary fw-bold" style="min-width: 90px;">Seção ${sectionCount}</h5>
-                        <input type="text" class="form-control section-name-input border-primary" placeholder="Nome da Seção (Ex: Preparação do Paciente)" required>
+            <div class="section-entry card mb-4 shadow-sm border-primary" id="section_${sectionCount}">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center w-50">
+                        <h5 class="mb-0 me-3 section-title-display text-primary fw-bold">Seção ${sectionCount}</h5>
+                        <input type="text" class="form-control section-name-input" placeholder="Nome da Seção..." required>
                     </div>
-                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeSection(${sectionCount})">
-                        <i class="bi bi-trash"></i> Remover Seção
-                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeSection(${sectionCount})"><i class="bi bi-trash"></i></button>
                 </div>
-                <div class="card-body">
-                    <div id="steps_container_sec_${sectionCount}" class="section-steps-container ps-3 border-start border-3 border-secondary mb-3"></div>
+                <div class="card-body bg-light">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Executores desta Seção</label>
+                            <div class="p-2 border rounded bg-white mb-1 d-flex flex-wrap gap-1" id="section_performers_container_${sectionCount}" style="min-height: 40px;">
+                                ${popPerfs}
+                            </div>
+                            <button type="button" class="btn btn-xs btn-outline-primary w-100 shadow-sm" style="font-size: 0.7rem;" 
+                                    onclick="openTreeModal('section_performers_container_${sectionCount}', 'section_performer', 'performer')">
+                                <i class="bi bi-person-plus"></i> Personalizar Executores da Seção
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Locais desta Seção</label>
+                            <div class="p-2 border rounded bg-white mb-1 d-flex flex-wrap gap-1" id="section_places_container_${sectionCount}" style="min-height: 40px;">
+                                ${popPlaces}
+                            </div>
+                            <button type="button" class="btn btn-xs btn-outline-primary w-100 shadow-sm" style="font-size: 0.7rem;" 
+                                    onclick="openTreeModal('section_places_container_${sectionCount}', 'section_place', 'place')">
+                                <i class="bi bi-geo-alt"></i> Personalizar Locais da Seção
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="steps_container_sec_${sectionCount}" class="ps-3 border-start border-3 border-primary section-steps-container"></div>
                     
-                    <div class="d-flex justify-content-center mt-2 border-top pt-3">
+                    <div class="d-flex justify-content-center mt-3 pt-2 border-top">
                         <div class="btn-group shadow-sm">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addStep('new', ${sectionCount})">
+                            <button type="button" class="btn btn-outline-primary btn-sm fw-bold" onclick="addStep('new', ${sectionCount})">
                                 <i class="bi bi-plus-lg"></i> Nova Etapa
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addStep('existing', ${sectionCount})">
+                            <button type="button" class="btn btn-outline-success btn-sm fw-bold" onclick="addStep('existing', ${sectionCount})">
                                 <i class="bi bi-search"></i> Reutilizar Etapa
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addStep('pop', ${sectionCount})">
-                                <i class="bi bi-box-arrow-in-right"></i> Incluir POP
+                            <button type="button" class="btn btn-outline-info text-dark btn-sm fw-bold" onclick="addStep('pop', ${sectionCount})">
+                                <i class="bi bi-box-arrow-in-right"></i> Incluir POP (Sub-Processo)
                             </button>
                         </div>
                     </div>
@@ -503,29 +719,14 @@
         });
     }
 
-    // --- FUNÇÕES DE ETAPA ATUALIZADAS ---
+    // --- // --- FUNÇÕES DE ETAPA ATUALIZADAS ---
     // A função addStep agora recebe em qual seção ela deve ser injetada
     function addStep(mode = 'new', sectionId = null) {
-        // Se não houver seção, cria uma automaticamente
-        if (!sectionId) {
-            const sections = document.querySelectorAll('.section-entry');
-            if (sections.length === 0) addSection();
-            // Pega o ID da última seção criada
-            const lastSection = document.querySelectorAll('.section-entry');
-            sectionId = lastSection[lastSection.length - 1].id.split('_')[1];
-        }
+        if (!sectionId) return; 
 
         stepCount++;
         const container = document.getElementById(`steps_container_sec_${sectionId}`);
-
-        const genPerfName = document.getElementById('general_performer_name').value || "";
-        const genPerfType = document.getElementById('general_performer_type').value || "RolePerformer";
-        const genPerfUri  = document.getElementById('general_performer_uri').value || ""; 
-
-        const genPlaceName = document.getElementById('general_place_name').value || "";
-        const genPlaceType = document.getElementById('general_place_type').value || "SitePlace";
-        const genPlaceUri  = document.getElementById('general_place_uri').value || "";  
-
+        
         const configs = {
             'new': { color: 'text-primary', title: 'Nova Etapa', badge: 'bg-primary' },
             'existing': { color: 'text-success', title: 'Etapa Existente', badge: 'bg-success' },
@@ -534,39 +735,43 @@
         const cfg = configs[mode];
 
         let perfPlaceHtml = '';
+
         if (mode === 'new') {
+            // Herda as etiquetas (badges) da seção pai
+            const sectionPerfs = document.getElementById(`section_performers_container_${sectionId}`).innerHTML;
+            const sectionPlaces = document.getElementById(`section_places_container_${sectionId}`).innerHTML;
+
             perfPlaceHtml = `
                 <div class="col-md-6">
-                    <div class="p-2 border rounded bg-light">
-                        <label class="small fw-bold text-muted" style="font-size: 0.6rem">EXECUTOR</label>
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control step-perf-name" name="step_performer_name[]" value="${genPerfName}" list="performerOptions" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="unlockField(this, 'perf')"><i class="bi bi-search"></i></button>
-                        </div>
-                        <input type="hidden" name="step_performer_type[]" class="step-perf-type" value="${genPerfType}">
-                        <input type="hidden" name="step_performer_uri[]" class="step-perf-uri" value="${genPerfUri}">
-                        <span class="badge bg-secondary gen-label mt-1">Padrão</span>
+                    <label class="small fw-bold text-muted">Executores da Etapa</label>
+                    <div class="p-2 border rounded bg-light mb-1 d-flex flex-wrap gap-1" id="step_performers_container_${stepCount}" style="min-height: 35px;">
+                        ${sectionPerfs} 
                     </div>
+                    <button type="button" class="btn btn-xs btn-link p-0 text-decoration-none" style="font-size: 0.65rem;"
+                            onclick="openTreeModal('step_performers_container_${stepCount}', 'step_performer', 'performer')">
+                        <i class="bi bi-pencil"></i> Personalizar Etapa
+                    </button>
                 </div>
                 <div class="col-md-6">
-                    <div class="p-2 border rounded bg-light">
-                        <label class="small fw-bold text-muted" style="font-size: 0.6rem">LOCAL</label>
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control step-place-name" name="step_place_name[]" value="${genPlaceName}" list="placeOptions" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="unlockField(this, 'place')"><i class="bi bi-search"></i></button>
-                        </div>
-                        <input type="hidden" name="step_place_type[]" class="step-place-type" value="${genPlaceType}">
-                        <input type="hidden" name="step_place_uri[]" class="step-place-uri" value="${genPlaceUri}">
-                        <span class="badge bg-secondary gen-label mt-1">Padrão</span>
+                    <label class="small fw-bold text-muted">Locais da Etapa</label>
+                    <div class="p-2 border rounded bg-light mb-1 d-flex flex-wrap gap-1" id="step_places_container_${stepCount}" style="min-height: 35px;">
+                        ${sectionPlaces} 
                     </div>
+                    <button type="button" class="btn btn-xs btn-link p-0 text-decoration-none" style="font-size: 0.65rem;"
+                            onclick="openTreeModal('step_places_container_${stepCount}', 'step_place', 'place')">
+                        <i class="bi bi-pencil"></i> Personalizar Etapa
+                    </button>
                 </div>`;
         } else if (mode === 'existing') {
+            // Na reutilização, não criamos cestos. Usamos os inputs antigos de texto simples para visualização readonly,
+            // que seu handleGlobalInput (passo 4) sabe como preencher.
             perfPlaceHtml = `
                 <div class="col-md-6">
                     <div class="p-2 border rounded bg-light opacity-75">
                         <label class="small fw-bold text-muted" style="font-size: 0.6rem">EXECUTOR (ORIGINAL)</label>
                         <input type="text" class="form-control form-control-sm step-perf-name" name="step_performer_name[]" readonly>
                         <input type="hidden" name="step_performer_type[]" class="step-perf-type">
+                        <input type="hidden" name="step_performer_uri[]" class="step-perf-uri">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -574,28 +779,23 @@
                         <label class="small fw-bold text-muted" style="font-size: 0.6rem">LOCAL (ORIGINAL)</label>
                         <input type="text" class="form-control form-control-sm step-place-name" name="step_place_name[]" readonly>
                         <input type="hidden" name="step_place_type[]" class="step-place-type">
+                        <input type="hidden" name="step_place_uri[]" class="step-place-uri">
                     </div>
                 </div>`;
-        } 
+        }
+        // Se for 'pop', perfPlaceHtml continua vazio (oculto).
 
         const html = `
-            <div class="step-entry border p-3 rounded mb-3 shadow-sm bg-white" id="step_${stepCount}" data-mode="${mode}">
+            <div class="step-entry border p-3 rounded mb-3 shadow-sm bg-white" id="step_${stepCount}" data-mode="${mode}" data-section-id="${sectionId}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="${cfg.color} fw-bold mb-0">${cfg.title}</h6>
-                    <div class="d-flex align-items-center">
-                        ${mode === 'new' ? `
-                        <div class="form-check form-switch me-3">
-                            <input class="form-check-input" type="checkbox" id="customCheck_${stepCount}" onchange="toggleCustom(${stepCount})">
-                            <label class="small ms-1" for="customCheck_${stepCount}">Personalizar</label>
-                        </div>` : ''}
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeStep(${stepCount})">Remover Etapa</button>
-                    </div>
+                    <h6 class="${cfg.color} fw-bold mb-0">${cfg.title} <span class="step-number-display"></span></h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeStep(${stepCount})">Remover</button>
                 </div>
                 <span class="badge ${cfg.badge} mb-3">${mode.toUpperCase()}</span>
                 
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label class="small fw-bold">Ação / Referência</label>
+                <div class="row g-2">
+                    <div class="col-12 mb-2">
+                        <label class="small fw-bold">Ação / POP Referência</label>
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control step-name-input" 
                                 name="step_name[]" 
@@ -603,24 +803,25 @@
                                 placeholder="Buscar ou descrever..." required>
                             <div class="pop-link-container"></div>
                         </div>
-                        <input type="hidden" name="step_uri[]" class="step-uri-hidden">
+                        <input type="hidden" name="step_uri[]" class="step-uri-hidden"> 
                     </div>
-                    
+
                     ${perfPlaceHtml}
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <label class="small text-success fw-bold">Pré-condição</label>
                         <textarea class="form-control form-control-sm" name="step_pre_condition[]" rows="1"></textarea>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <label class="small text-danger fw-bold">Pós-condição</label>
                         <textarea class="form-control form-control-sm" name="step_pos_condition[]" rows="1"></textarea>
                     </div>
                 </div>
-            </div>`;
-            
+            </div>
+        `;
+        
         container.insertAdjacentHTML('beforeend', html);
-        reorderAll(); // Mantém a numeração de tudo organizada
+        reorderAll();
     }
 
     function removeStep(id) {
@@ -634,13 +835,23 @@
     }
 
     function updateStepDefaults() {
-        const perfName = document.getElementById('general_performer_name').value;
-        const perfType = document.getElementById('general_performer_type').value;
-        const perfUri  = document.getElementById('general_performer_uri').value;
+        // Pega o primeiro executor geral da lista de etiquetas
+        const perfNames = document.querySelectorAll('input[name="general_performer_name[]"]');
+        const perfTypes = document.querySelectorAll('input[name="general_performer_type[]"]');
+        const perfUris = document.querySelectorAll('input[name="general_performer_uri[]"]');
+        
+        const perfName = perfNames.length > 0 ? perfNames[0].value : "";
+        const perfType = perfTypes.length > 0 ? perfTypes[0].value : "RolePerformer";
+        const perfUri = perfUris.length > 0 ? perfUris[0].value : "";
 
-        const placeName = document.getElementById('general_place_name').value;
-        const placeType = document.getElementById('general_place_type').value;
-        const placeUri  = document.getElementById('general_place_uri').value;
+        // Pega o primeiro local geral da lista de etiquetas
+        const placeNames = document.querySelectorAll('input[name="general_place_name[]"]');
+        const placeTypes = document.querySelectorAll('input[name="general_place_type[]"]');
+        const placeUris = document.querySelectorAll('input[name="general_place_uri[]"]');
+
+        const placeName = placeNames.length > 0 ? placeNames[0].value : "";
+        const placeType = placeTypes.length > 0 ? placeTypes[0].value : "SitePlace";
+        const placeUri = placeUris.length > 0 ? placeUris[0].value : "";
 
         document.querySelectorAll('.step-entry').forEach((stepDiv) => {
             const id = stepDiv.id.replace('step_', '');
@@ -678,7 +889,7 @@
     function addListField(containerId, fieldName) {
         const div = document.createElement('div');
         div.className = 'input-group mb-2';
-        div.innerHTML = `<input type="text" class="form-control" name="${fieldName}"><button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">-</button>`;
+        div.innerHTML = `<input type="text" list="classOptions" required class="form-control" name="${fieldName}"><button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">-</button>`;
         document.getElementById(containerId).appendChild(div);
     }
 
@@ -715,7 +926,7 @@
         </div>
     `;
         document.getElementById('terms_container').appendChild(div);
-    }
+    } 
 
     function syncGeneralType(mode) {
     if (mode === 'perf') {
@@ -737,22 +948,38 @@
             const stepsData = [];
             
             sec.querySelectorAll('.step-entry').forEach((step) => {
+                // 1. Captura segura dos campos básicos com fallback se não existirem
+                const nameEl = step.querySelector('.step-name-input');
+                const uriEl = step.querySelector('.step-uri-hidden');
+                const preEl = step.querySelector('[name="step_pre_condition[]"]');
+                const posEl = step.querySelector('[name="step_pos_condition[]"]');
+
+                // 2. Captura a lista de EXECUTORES desta etapa
+                const stepPerformers = [];
+                const perfNames = step.querySelectorAll('input[name="step_performer_name[]"]');
+                const perfTypes = step.querySelectorAll('input[name="step_performer_type[]"]');
+                const perfUris = step.querySelectorAll('input[name="step_performer_uri[]"]');
+                perfNames.forEach((n, idx) => {
+                    stepPerformers.push({ name: n.value, type: perfTypes[idx].value, uri: perfUris[idx].value });
+                });
+
+                // 3. Captura a lista de LOCAIS desta etapa
+                const stepPlaces = [];
+                const placeNames = step.querySelectorAll('input[name="step_place_name[]"]');
+                const placeTypes = step.querySelectorAll('input[name="step_place_type[]"]');
+                const placeUris = step.querySelectorAll('input[name="step_place_uri[]"]');
+                placeNames.forEach((n, idx) => {
+                    stepPlaces.push({ name: n.value, type: placeTypes[idx].value, uri: placeUris[idx].value });
+                });
+
                 stepsData.push({
-                    name: step.querySelector('.step-name-input').value,
-                    uri: step.querySelector('.step-uri-hidden').value,
-                    performer: {
-                        name: step.querySelector('.step-perf-name') ? step.querySelector('.step-perf-name').value : "",
-                        type: step.querySelector('.step-perf-type') ? step.querySelector('.step-perf-type').value : "",
-                        uri: step.querySelector('.step-perf-uri') ? step.querySelector('.step-perf-uri').value : ""
-                    },
-                    place: {
-                        name: step.querySelector('.step-place-name') ? step.querySelector('.step-place-name').value : "",
-                        type: step.querySelector('.step-place-type') ? step.querySelector('.step-place-type').value : "",
-                        uri: step.querySelector('.step-place-uri') ? step.querySelector('.step-place-uri').value : ""
-                    },
+                    name: nameEl ? nameEl.value : "Sem nome",
+                    uri: uriEl ? uriEl.value : "",
+                    performers: stepPerformers, // Agora envia a lista inteira!
+                    places: stepPlaces,         // Agora envia a lista inteira!
                     logic: {
-                        preCondition: step.querySelector('[name="step_pre_condition[]"]').value,
-                        posCondition: step.querySelector('[name="step_pos_condition[]"]').value
+                        preCondition: preEl ? preEl.value : "",
+                        posCondition: posEl ? posEl.value : ""
                     }
                 });
             });
@@ -783,16 +1010,17 @@
                     definition: formData.getAll('term_definition[]')[i]
                 }))
             },
-            general_performer: {
-                name: document.getElementById('general_performer_name').value,
-                type: document.getElementById('general_performer_type').value,
-                uri: document.getElementById('general_performer_uri').value
-            },
-            general_place: {
-                name: document.getElementById('general_place_name').value,
-                type: document.getElementById('general_place_type').value,
-                uri: document.getElementById('general_place_uri').value
-            },
+            // NOVO: Captura múltiplos executores e locais padrão
+            general_performers: formData.getAll('general_performer_name[]').map((name, i) => ({
+                name: name,
+                type: formData.getAll('general_performer_type[]')[i],
+                uri: formData.getAll('general_performer_uri[]')[i]
+            })),
+            general_places: formData.getAll('general_place_name[]').map((name, i) => ({
+                name: name,
+                type: formData.getAll('general_place_type[]')[i],
+                uri: formData.getAll('general_place_uri[]')[i]
+            })),
             agents: {
                 creators: formData.getAll('creator_name[]').map((name, i) => ({ name, type: formData.getAll('creator_type[]')[i], uri: formData.getAll('creator_uri[]')[i] })),
                 checkers: formData.getAll('checker_name[]').map((name, i) => ({ name, type: formData.getAll('checker_type[]')[i], uri: formData.getAll('checker_uri[]')[i] })),
@@ -961,24 +1189,7 @@ function handleGlobalInput(e) {
         }
     }
 
-    // 5. PADRÕES GERAIS (Sincronização)
-    if (target.id === 'general_performer_name' || target.id === 'general_place_name') {
-        const isPerf = target.id === 'general_performer_name';
-        const dataKey = isPerf ? 'performers' : 'places';
-        const typeHidId = isPerf ? 'general_performer_type' : 'general_place_type';
-        const uriHidId = isPerf ? 'general_performer_uri' : 'general_place_uri'; // Garanta que este ID existe no HTML
-
-        const selected = globalData[dataKey].find(item => item.name.value === target.value);
-        const uriInput = document.getElementById(uriHidId);
-
-        if (selected) {
-            document.getElementById(typeHidId).value = selected.type.value;
-            if (uriInput) uriInput.value = selected.uri.value; // CAPTURA A URI DO GRAPHDB
-        } else {
-            if (uriInput) uriInput.value = ""; // Novo cadastro
-        }
-        updateStepDefaults();
-    }
+    
     
     // 6. PERSONALIZAÇÃO INDIVIDUAL DE NOVA ETAPA
     if (target.classList.contains('step-perf-name') || target.classList.contains('step-place-name')) {

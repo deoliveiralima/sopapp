@@ -36,16 +36,18 @@ def add_step_triples(g, step_uri, s_data, idx, parent_uri):
             g.add((step_uri, RDF.type, SOP.Sop))
     
     # Processa Executor (performer) e Local (place) específicos da etapa
-    for key, prop, prefix in [('performer', SOP.performedBy, 'perf'), ('place', SOP.performedAt, 'place')]:
-        obj = s_data.get(key, {})
-        if obj.get('name'):
-            obj_uri = URIRef(obj['uri']) if obj.get('uri') else BASE[f"{prefix}_{generate_stable_id(obj['name'])}"]
-            if not obj.get('uri'):
-                g.add((obj_uri, RDF.type, SOP[obj.get('type', 'Performer' if prefix == 'perf' else 'Place')]))
-                g.add((obj_uri, RDFS.label, Literal(obj['name'])))
-            g.add((step_uri, prop, obj_uri))
+    for key, prop, prefix in [('performers', SOP.performedBy, 'perf'), ('places', SOP.performedAt, 'place')]:
+        for obj in s_data.get(key, []):
+            if obj.get('name'):
+                obj_uri = URIRef(obj['uri']) if obj.get('uri') else BASE[f"{prefix}_{generate_stable_id(obj['name'])}"]
+                if not obj.get('uri'):
+                    # Pega o tipo exato ou usa um default baseado no prefixo
+                    default_type = 'RolePerformer' if prefix == 'perf' else 'SitePlace'
+                    g.add((obj_uri, RDF.type, SOP[obj.get('type', default_type)]))
+                    g.add((obj_uri, RDFS.label, Literal(obj['name'])))
+                g.add((step_uri, prop, obj_uri))
 
-    # --- NOVO: Captura as condições (Pre/Pos) enviadas pelo JS ---
+    # --- Captura as condições (Pre/Pos) continuam iguais ---
     logic = s_data.get('logic', {})
     if logic.get('preCondition'):
         g.add((step_uri, SOP.preCondition, Literal(logic['preCondition'], datatype=XSD.string)))
@@ -122,6 +124,28 @@ def save_rdf():
     if metadata.get('status'):
         g.add((pop_uri, SOP.hasStatus, SOP[metadata.get('status')]))
 
+
+    # --- NOVO: EXECUTORES E LOCAIS GERAIS (Múltiplos) ---
+    # Agora iteramos sobre as listas general_performers e general_places
+    mapping_general = [
+        ('general_performers', SOP.performedBy, 'perf'),
+        ('general_places', SOP.performedAt, 'place')
+    ]
+
+    for key, predicate, prefix in mapping_general:
+        items = data.get(key, [])
+        for obj in items:
+            if obj.get('name'):
+                # Se já tem URI do GraphDB, usa ela. Se não, gera uma nova estável.
+                obj_uri = URIRef(obj['uri']) if obj.get('uri') else BASE[f"{prefix}_{generate_stable_id(obj['name'])}"]
+                
+                if not obj.get('uri'):
+                    # Define a classe (RolePerformer, SitePlace, etc)
+                    g.add((obj_uri, RDF.type, SOP[obj.get('type')]))
+                    g.add((obj_uri, RDFS.label, Literal(obj['name'])))
+                
+                # Vincula o Executor/Local ao POP
+                g.add((pop_uri, predicate, obj_uri))
     # --- CLASSIFICAÇÕES E TERMOS ---
     for class_name in metadata.get('classifications', []):
         if class_name:
@@ -366,13 +390,12 @@ def get_pop_details(pop_id):
     # Transfere os itens únicos para a lista final
     data["items"] = list(unique_items.values())
 
-    # 3. Etapas e Links para Sub-POPs (Activity Hierarchy)
+    # 3. Etapas, Seções e Links para Sub-POPs
     sparql_steps = f"""
     PREFIX sop: <https://purl.archive.org/sopontology#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-    SELECT ?secName ?secDisc ?step ?stepName ?stepDisc ?subPop WHERE {{
+    SELECT ?secName ?secDisc ?step ?stepName ?stepDisc ?subPop ?perfLabel ?placeLabel ?preCond ?posCond WHERE {{
         {{
             # Caso o POP tenha seções
             {uri} sop:hasSection ?section .
@@ -380,33 +403,49 @@ def get_pop_details(pop_id):
                      sop:discriminator ?secDisc .
             ?section sop:hasStep ?step .
         }} UNION {{
-            # Caso o POP tenha passos diretos
+            # Caso o POP tenha passos diretos sem seção
             {uri} sop:hasStep ?step .
-            BIND("Procedimento" AS ?secName)
+            BIND("Fluxo Principal" AS ?secName)
             BIND(0 AS ?secDisc)
         }}
         ?step sop:name ?stepName ;
               sop:discriminator ?stepDisc .
+              
         OPTIONAL {{ ?step rdfs:seeAlso ?subPop }}
+        OPTIONAL {{ ?step sop:performedBy ?perf . ?perf rdfs:label ?perfLabel }}
+        OPTIONAL {{ ?step sop:performedAt ?place . ?place rdfs:label ?placeLabel }}
+        OPTIONAL {{ ?step sop:preCondition ?preCond }}
+        OPTIONAL {{ ?step sop:posCondition ?posCond }}
     }} ORDER BY ?secDisc ?stepDisc
     """
     res_steps = query_graphdb(sparql_steps)
+    
+    sections_dict = {}
     if res_steps:
         for row in res_steps['results']['bindings']:
-            data["steps"].append({
+            sec_name = row['secName']['value']
+            sec_disc = int(row['secDisc']['value'])
+            
+            if sec_name not in sections_dict:
+                sections_dict[sec_name] = {"name": sec_name, "order": sec_disc, "steps": []}
+                
+            sections_dict[sec_name]["steps"].append({
                 "id": row.get('subPop', row['step'])['value'].split("/")[-1].split("#")[-1],
-                "name": row['name']['value'],
+                "name": row['stepName']['value'],
                 "isSubPop": "subPop" in row,
-                "order": row['disc']['value'],
-                # Adiciona o executor e local ao dicionário de cada etapa
-                "performer": row.get('perfLabel', {}).get('value', 'Padrão'),
-                "place": row.get('placeLabel', {}).get('value', 'Padrão')
+                "order": row['stepDisc']['value'],
+                "performer": row.get('perfLabel', {}).get('value', 'Não definido'),
+                "place": row.get('placeLabel', {}).get('value', 'Não definido'),
+                "preCondition": row.get('preCond', {}).get('value', ''),
+                "posCondition": row.get('posCond', {}).get('value', '')
             })
+
+    # Troca data["steps"] por data["sections"] ordenado
+    data["sections"] = sorted(list(sections_dict.values()), key=lambda x: x['order'])
 
     # Converte sets para listas e limpa os dados
     for k in data["agents"]: 
-        data["agents"][k] = list(set(data["agents"][k])) # Remove duplicatas caso existam
-    
+        data["agents"][k] = list(set(data["agents"][k])) 
     data["concepts"]["classifications"] = list(set(data["concepts"]["classifications"]))
     
     return jsonify(data)
@@ -416,13 +455,13 @@ def get_organizations():
     sparql = """
     PREFIX org: <http://www.w3.org/ns/org#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-    SELECT DISTINCT ?uri ?name WHERE {
+    SELECT DISTINCT ?uri ?name ?parentUri WHERE {
         { ?uri a org:FormalOrganization } UNION { ?uri a org:OrganizationalUnit }
-        OPTIONAL { ?uri skos:prefLabel ?name }
-        OPTIONAL { ?uri rdfs:label ?name }
-        FILTER(bound(?name))
+        ?uri skos:prefLabel ?name .
+        
+        # Pega a URI do pai, se existir
+        OPTIONAL { ?uri org:unitOf ?parentUri }
     } ORDER BY ?name
     """
     result = query_graphdb(sparql)
@@ -462,45 +501,68 @@ def get_agents():
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX org: <http://www.w3.org/ns/org#>
 
-    # Usamos SAMPLE ou MAX para pegar apenas um rótulo de tipo por URI
-    SELECT ?uri ?name (MAX(?type_label) AS ?type) WHERE { 
+    SELECT DISTINCT ?uri ?name ?type ?parentUri WHERE { 
         ?uri rdf:type/rdfs:subClassOf* foaf:Agent .
         
-        # Busca o nome em diferentes propriedades
+        # Busca o nome
         { ?uri foaf:name ?name } UNION 
         { ?uri rdfs:label ?name } UNION 
         { ?uri skos:prefLabel ?name }
 
-        # Busca o tipo, mas vamos filtrar para pegar algo mais específico que apenas 'Agent'
+        # Identifica o tipo (Person, Group, OrganizationalUnit, etc)
         ?uri rdf:type ?type_uri .
-        BIND(REPLACE(STR(?type_uri), "^.*[/#]", "") AS ?type_label)
+        BIND(REPLACE(STR(?type_uri), "^.*[/#]", "") AS ?type)
         
-        # Filtro opcional: evita que o tipo mostrado seja apenas 'Agent' se houver outro mais específico
-        FILTER(?type_label != "Agent")
+        # Tenta encontrar um "pai" (seja via unidade ou via afiliação)
+        OPTIONAL { ?uri org:unitOf ?parentUri }
+        OPTIONAL { ?uri org:memberOf ?parentUri } 
+        
+        FILTER(?type != "Agent")
         FILTER(!ISIRI(?name))
-    } 
-    GROUP BY ?uri ?name
-    ORDER BY ?name
-    """  
+    } ORDER BY ?name
+    """
     result = query_graphdb(sparql)
     return jsonify(result['results']['bindings'] if result else [])
-
 @app.route('/api/performers', methods=['GET'])
 def get_performers():
-    # Mapeia papéis e organizações para as classes da SOP Ontology
+    # Executor: Role, Organization ou Gestores (Pessoas inferidas via org:headOf) -> Salvo como Performer
     sparql = """
     PREFIX org: <http://www.w3.org/ns/org#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT DISTINCT ?uri ?name ?type WHERE {
-        { ?uri a org:Role . BIND("RolePerformer" AS ?type) }
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+    SELECT DISTINCT ?uri ?name ?type ?parentUri WHERE {
+        { 
+            ?uri a org:Role . 
+            BIND("RolePerformer" AS ?type) 
+        }
         UNION
-        { ?uri a org:Organization . BIND("OrganizationPerformer" AS ?type) }
+        { 
+            ?uri a org:Organization . 
+            BIND("OrganizationPerformer" AS ?type) 
+        }
         UNION
-        { ?uri a org:OrganizationalUnit . BIND("OrganizationPerformer" AS ?type) }
+        { 
+            ?uri a org:OrganizationalUnit . 
+            BIND("OrganizationPerformer" AS ?type) 
+        }
+        
+        
+        # Pega os nomes dependendo de como foram cadastrados (skos, rdfs ou foaf)
         OPTIONAL { ?uri skos:prefLabel ?name }
         OPTIONAL { ?uri rdfs:label ?name }
+        OPTIONAL { ?uri foaf:name ?name }
+        
+        # Pega a hierarquia padrão para Roles e Organizations
+        OPTIONAL { ?uri org:unitOf ?parentUriUnit . }
+        
+        # Se for um Gestor, ele já tem o ?parentUri do setorChefiado. 
+        # Se não for, usa o ?parentUriUnit padrão.
+        BIND(COALESCE(?setorChefiado, ?parentUriUnit) AS ?parentUri)
+        
         FILTER(bound(?name))
     } ORDER BY ?name
     """
@@ -509,19 +571,23 @@ def get_performers():
 
 @app.route('/api/places', methods=['GET'])
 def get_places():
-    # Mapeia locais físicos e setores para as classes da SOP Ontology
+    # Local: Site ou Organization -> Salvo como Place
     sparql = """
     PREFIX org: <http://www.w3.org/ns/org#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT DISTINCT ?uri ?name ?type WHERE {
+    
+    SELECT DISTINCT ?uri ?name ?type ?parentUri WHERE {
         { ?uri a org:Site . BIND("SitePlace" AS ?type) }
         UNION
         { ?uri a org:Organization . BIND("OrganizationPlace" AS ?type) }
         UNION
         { ?uri a org:OrganizationalUnit . BIND("OrganizationPlace" AS ?type) }
+        
         OPTIONAL { ?uri skos:prefLabel ?name }
         OPTIONAL { ?uri rdfs:label ?name }
+        OPTIONAL { ?uri org:unitOf ?parentUri }
+        
         FILTER(bound(?name))
     } ORDER BY ?name
     """

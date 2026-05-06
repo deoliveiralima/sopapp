@@ -1,0 +1,250 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1 a sop:Sop ;
+    sop:approvalDate "2026-04-10"^^xsd:date ;
+    sop:approvedBy base:barbaraFigueiredo ;
+    sop:createdBy base:barbaraFigueiredo ;
+    sop:creationDate "2026-04-10T00:00:00"^^xsd:dateTime ;
+    sop:description """São indicadores do estado de saúde e da garantia das funções
+circulatórias, respiratória, neural e endócrina do corpo. Os sinais vitais são: pulso,
+frequência cardíaca, frequência respiratória, pressão arterial, temperatura e dor."""^^xsd:string ;
+    sop:hasClassification base:concept_909681fd ;
+    sop:hasItem base:item_025491b2,
+        base:item_049cb631,
+        base:item_04a9a521,
+        base:item_04b3dc77,
+        base:item_275d9daa,
+        base:item_4285baaf,
+        base:item_672b5d5b,
+        base:item_75830880,
+        base:item_7ae4a8f7,
+        base:item_8aa6e679,
+        base:item_b0794776,
+        base:item_b90e9f23,
+        base:item_c37c8eca,
+        base:item_ee0fadfd,
+        base:item_ee4afa51,
+        base:item_f8416960 ;
+    sop:hasResponsible base:IFF ;
+    sop:hasSection base:section_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1,
+        base:section_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2 ;
+    sop:hasStatus sop:published ;
+    sop:name "VERIFICAÇÃO DE SINAIS VITAIS EM ADOLESCENTES E ADULTOS"^^xsd:string ;
+    sop:performedAt base:CSBCM,
+        base:CSSTREIT ;
+    sop:performedBy base:roleEnfermeiro ;
+    sop:version "1"^^xsd:string .
+
+base:concept_909681fd a skos:Concept ;
+    skos:prefLabel "Saúde"^^xsd:string .
+
+base:item_025491b2 a sop:Material ;
+    sop:discriminator 4 ;
+    sop:name "Estetoscópio" .
+
+base:item_049cb631 a sop:Material ;
+    sop:discriminator 7 ;
+    sop:name "Papel toalha" .
+
+base:item_04a9a521 a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Bandeja" .
+
+base:item_04b3dc77 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Definição de Pulso: É a verificação dos batimentos cardíacos do paciente de forma manual, durante um minuto. Para sua verificação, utiliza-se a polpa dos dedos indicador e médio, por meio da palpação de uma artéria, geralmente a artéria radial, contando-se no período de um minuto o número de batimentos e verificando-se suas características: intensidade ou amplitude (pode ser cheio ou filiforme), ritmicidade (pode ser regular, irregular ou arritmia) e simetria (iguais em ambos os membros)." .
+
+base:item_275d9daa a sop:Material ;
+    sop:discriminator 3 ;
+    sop:name "Esfigmomanômetro" .
+
+base:item_4285baaf a sop:Material ;
+    sop:discriminator 8 ;
+    sop:name "Caneta e papel" .
+
+base:item_672b5d5b a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Estabelecer os padrões basais, observar tendências, identificar problemas fisiológicos e monitorar a resposta do cliente ao tratamento." .
+
+base:item_75830880 a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Relógio com ponteiros de segundo" .
+
+base:item_7ae4a8f7 a sop:ExpectedResults ;
+    sop:discriminator 1 ;
+    sop:name "Obter parâmetros vitais do cliente, auxiliando no diagnóstico e na terapêutica a ser utilizada." .
+
+base:item_8aa6e679 a sop:Material ;
+    sop:discriminator 9 ;
+    sop:name "Escalas de mensuração de dor" .
+
+base:item_b0794776 a sop:BibliographicReference ;
+    sop:discriminator 1 ;
+    sop:name "EMPRESA BRASILEIRA DE SERVIÇOS HOSPITALARES. Hospitais Universitários Federais. Procedimento operacional padrão: POP/ Serviço de Educação em Enfermagem/04/2016: normas e rotinas da enfermagem. 2016. Disponível em: http://www2.ebserh.gov.br/documents/147715/0/Pop+4+servi%C3%A7o+de+educ +enfermagem.pdf/ebdf439e-0577-4f25-8d62-19e80b4ac5e6. Acesso em: 18 ago. 2020." .
+
+base:item_b90e9f23 a sop:BibliographicReference ;
+    sop:discriminator 3 ;
+    sop:name "UNIVERSIDADE FEDERAL DE JUIZ DE FORA. Procedimentos de Enfermagem: POP FACENF Nº 04: sinais vitais. Minas Gerais: EBSERH, 2019. Disponível em: https://www.ufjf.br/fundamentosenf/files/2019/08/POP-FACENFSinais-Vitais-n.-04.1.pdf. Acesso em: 18 ago. 2020." .
+
+base:item_c37c8eca a sop:Material ;
+    sop:discriminator 6 ;
+    sop:name "Termômetro" .
+
+base:item_ee0fadfd a sop:Material ;
+    sop:discriminator 5 ;
+    sop:name "Bolas de Algodão embebidas em álcool 70%" .
+
+base:item_ee4afa51 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "Valores de referência do Pulso Idade Pulso (bpm) Adolescente 60-90 Adulto 60-100" .
+
+base:item_f8416960 a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "PREFEITURA MUNICIPAL DE CAMPINAS. Secretaria Municipal de Saúde Manual de Procedimentos Operacional Padrão (POP) de Enfermagem. Campinas, SP, 2016. Disponível em: http://www.saude.campinas.sp.gov.br/saude/enfermagem/Manual_Procedimentos_ Operacionais_Padrao_POP_Enfermagem_2016.pdf . Acesso em: 29 jul. 2020." .
+
+base:section_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_1,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_10,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_11,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_12,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_2,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_3,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_4,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_5,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_6,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_7,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_8,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_9 ;
+    sop:name "Verificação do Pulso"^^xsd:string .
+
+base:section_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_1,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_10,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_11,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_12,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_13,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_14,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_2,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_3,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_4,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_5,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_6,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_7,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_8,
+        base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_9 ;
+    sop:name "Verificação da Frequência Cardíaca"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_1 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 1 ;
+    sop:name "Higienização Simples das Mãos"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_10 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 10 ;
+    sop:name "Higienização Simples das Mãos"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_11 a sop:Step ;
+    sop:discriminator 11 ;
+    sop:name "Anotar o procedimento realizado no prontuário do cliente, registrando a frequência em bpm e descrevendo as características do pulso encontrado."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_12 a sop:Step ;
+    sop:discriminator 12 ;
+    sop:name "Repetir o procedimento conforme prescrição médica e de enfermagem"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Orientar o cliente quanto ao procedimento"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Preparar o material necessário"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Posicionar o cliente em posição confortável: se o cliente estiver em posição supina, colocar o antebraço ao lado da região inferior do tórax com o punho estendido e a palma da mão para baixo; se estiver sentado, dobrar seu cotovelo a 90°, apoiar seu antebraço, estender suavemente o punho com a palma da mão votada para baixo."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name " Aquecer as mãos, se necessário, friccionando-as"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Palpar a artéria escolhida (artéria radial, por exemplo)"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Colocar as polpas digitais dos dedos, médio e indicador, sobre uma artéria superficial comprimindo-a suavemente."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name "Contar os batimentos arteriais durante 1 minuto."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_1_9 a sop:Step ;
+    sop:discriminator 9 ;
+    sop:name "Verificar a frequência, ritmo e intensidade do pulso. Repita o procedimento, se necessário."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_1 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 1 ;
+    sop:name "Higienização Simples das Mãos"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_10 a sop:Step ;
+    sop:discriminator 10 ;
+    sop:name "Quando auscultar os sons cardíacos olhar para o relógio e começar a contar a frequência; começar a contar do zero e em seguida um, dois e assim por diante. Conte por 1 minuto."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_11 a sop:Step ;
+    sop:discriminator 11 ;
+    sop:name "Note se a frequência cardíaca está regular ou irregular."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_12 a sop:Step ;
+    sop:discriminator 12 ;
+    sop:name "Realizar novamente a assepsia das olivas do diafragma do estetoscópio com algodão embebido com álcool a 70%."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_13 a sop:Step ;
+    rdfs:seeAlso base:higienizacao_simples_das_maos_1_1 ;
+    sop:discriminator 13 ;
+    sop:name "Higienização Simples das Mãos"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_14 a sop:Step ;
+    sop:discriminator 14 ;
+    sop:name "Repetir o procedimento conforme prescrição médica e de enfermagem"^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Orientar o cliente quanto ao procedimento."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Posicionar o cliente em posição confortável, preferencialmente posição supina ou sentada."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Manter a privacidade do cliente."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Afastar a roupa do cliente para descobrir o esterno e o lado esquerdo do peito."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Realizar a assepsia das olivas e do diafragma do estetoscópio com algodão embebido em álcool 70%."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Localizar os pontos de referência anatômicos para identificar o pulso apical."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name "Colocar o diafragma do estetoscópio na palma da mão por 5 a 10 segundos."^^xsd:string .
+
+base:step_verificacao_de_sinais_vitais_em_adolescentes_e_adultos_1_1_2_9 a sop:Step ;
+    sop:discriminator 9 ;
+    sop:name "Colocar o diafragma do estetoscópio sobre o pulso apical (quinto espaço intercostal esquerdo na linha hemiclavicular), e auscultar em busca dos sons cardíacos (ouvidos como Tum Ta)."^^xsd:string .
+

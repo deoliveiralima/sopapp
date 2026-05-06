@@ -1,0 +1,186 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1 a sop:Sop ;
+    sop:approvalDate "2026-04-10"^^xsd:date ;
+    sop:approvedBy base:CSSTREIT ;
+    sop:createdBy base:CSCC ;
+    sop:creationDate "2026-04-10T00:00:00"^^xsd:dateTime ;
+    sop:description """Consiste na higiene das mãos utilizando uma preparação
+antisséptica a base de álcool sob as formas líquida, gel, espuma ou outras, que
+tem como finalidade reduzir ou inibir o crescimento de microrganismos nas mãos."""^^xsd:string ;
+    sop:hasClassification base:concept_76ac44c4,
+        base:concept_909681fd,
+        base:concept_cb12b78a ;
+    sop:hasItem base:item_167f246d,
+        base:item_2afe790f,
+        base:item_315f867a,
+        base:item_3fffd59d,
+        base:item_6c648c88,
+        base:item_956ea217,
+        base:item_9868719b,
+        base:item_9e703101,
+        base:item_a8044a71,
+        base:item_a8488ce9,
+        base:item_c349e57c,
+        base:item_ce7f3314,
+        base:item_d25041ed,
+        base:item_db3f2c38,
+        base:item_dd4f94d9,
+        base:item_de8e8aad,
+        base:item_e962db1f,
+        base:item_ee91fd47,
+        base:item_f5d8ca34,
+        base:item_f9af3d57 ;
+    sop:hasResponsible base:IFF ;
+    sop:hasSection base:section_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1 ;
+    sop:hasStatus sop:approved ;
+    sop:hasTerm base:term_cdc143a8 ;
+    sop:name "Fricção antisséptica das mãos com preparação alcoólica"^^xsd:string ;
+    sop:performedAt base:CASCCG,
+        base:CASCQ,
+        base:CSBCM,
+        base:CSCBJI,
+        base:CSCC,
+        base:CSSTREIT ;
+    sop:performedBy base:roleAuxiliarDeEnfermagem,
+        base:roleEnfermeiro,
+        base:roleTecnicoEmEnfermagem ;
+    sop:version "1"^^xsd:string .
+
+base:concept_76ac44c4 a skos:Concept ;
+    skos:prefLabel "Higienização"^^xsd:string .
+
+base:concept_909681fd a skos:Concept ;
+    skos:prefLabel "Saúde"^^xsd:string .
+
+base:concept_cb12b78a a skos:Concept ;
+    skos:prefLabel "Enfermagem"^^xsd:string .
+
+base:item_167f246d a sop:Note ;
+    sop:discriminator 4 ;
+    sop:name "A preparação alcoólica deve apresentar boa tolerância cutânea, ou seja, deve conter emolientes, umectantes ou outros agentes condicionadores em sua formulação; deve apresentar boa textura e viscosidade, sendo isenta de material em suspensão para evitar que deixe resíduos aderentes nas mãos e precavendo a sensação de mãos pegajosas após aplicação; deve ser hipoalergênica, atóxica e isenta de cheiro muito forte." .
+
+base:item_2afe790f sop:discriminator 4 .
+
+base:item_315f867a a sop:Note ;
+    sop:discriminator 3 ;
+    sop:name "A concentração final da preparação alcoólica para fricção antisséptica das mãos a ser utilizada em serviços de saúde deve cumprir com o estabelecido na RDC n° 42/2010, ou seja, entre 60% a 80% no caso de preparações sob a forma líquida e concentração final mínima de 70%, no caso de preparações sob as formas gel, espuma e outras." .
+
+base:item_3fffd59d sop:discriminator 1 .
+
+base:item_6c648c88 a sop:UsageSituation ;
+    sop:discriminator 1 ;
+    sop:name "Antes e após ter contato com o cliente" .
+
+base:item_956ea217 a sop:UsageSituation ;
+    sop:discriminator 2 ;
+    sop:name "Antes de realizar procedimentos assistenciais e manipular dispositivos invasivos" .
+
+base:item_9868719b a sop:UsageSituation ;
+    sop:discriminator 3 ;
+    sop:name "Antes de calçar luvas para inserção de dispositivos invasivos que não requeiram preparo cirúrgico" .
+
+base:item_9e703101 a sop:UsageSituation ;
+    sop:discriminator 6 ;
+    sop:name "Após ter contato com objetos inanimados e superfícies imediatamente próximas ao cliente" .
+
+base:item_a8044a71 a sop:UsageSituation ;
+    sop:discriminator 5 ;
+    sop:name "Ao mudar de um sítio corporal contaminado para outro, limpo, durante o cuidado ao cliente;" .
+
+base:item_a8488ce9 a sop:BibliographicReference ;
+    sop:discriminator 2 ;
+    sop:name "BRASIL. Agência Nacional de Vigilância Sanitária. RDC n°. 42, de 25 de outubro de 2010. Dispõe sobre a obrigatoriedade de disponibilização de preparação alcoólica para fricção antisséptica das mãos, pelos serviços de saúde do país e dá outras providências. Diário Oficial da União [da República Federativa do Brasil], Brasília, DF, 26 out. 2010." .
+
+base:item_c349e57c sop:discriminator 1 .
+
+base:item_ce7f3314 a sop:Note ;
+    sop:discriminator 5 ;
+    sop:name "Não aplicar a preparação alcoólica com as mãos molhadas, pois a água poderá reduzir a eficácia do produto alcoólico." .
+
+base:item_d25041ed sop:discriminator 4 .
+
+base:item_db3f2c38 a sop:UsageSituation ;
+    sop:discriminator 7 ;
+    sop:name "Antes e após a remoção das luvas" .
+
+base:item_dd4f94d9 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "A fricção antisséptica das mãos com preparação alcoólica deve ter duração de 20 a 30 segundos." .
+
+base:item_de8e8aad a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Formulação alcoólica para fricção antisséptica das mãos (devidamente registrada na Agência Nacional de Vigilância Sanitária (ANVISA)" .
+
+base:item_e962db1f a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Dispensadores de formulação alcoólica, regularmente avaliados, higienizados e funcionando corretamente" .
+
+base:item_ee91fd47 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Reduzir a carga microbiana das mãos (não há remoção de sujidades), prevenindo a transmissão cruzada de microrganismos e a ocorrência das IRAS." .
+
+base:item_f5d8ca34 a sop:BibliographicReference ;
+    sop:discriminator 3 ;
+    sop:name "BRASIL. Agência Nacional de Vigilância Sanitária. Segurança do paciente em serviços de saúde: higienização das mãos. Brasília, 2009. 105 p." .
+
+base:item_f9af3d57 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "A higienização das mãos deve ser feita com preparação alcoólica quando estas não estiverem visivelmente sujas" .
+
+base:section_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_1,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_2,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_3,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_4,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_5,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_6,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_7,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_8,
+        base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_9 ;
+    sop:name "Descrição do procedimento"^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Aplicar na palma da mão quantidade suficiente do produto para cobrir toda a superfície das mãos (seguir a quantidade recomendada pelo fabricante)."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Friccionar as palmas das mãos entre si."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Friccionar a palma da mão direita contra o dorso da mão esquerda, entrelaçando os dedos, e vice-versa."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Friccionar a palma das mãos entre si, com os dedos entrelaçados."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Friccionar o dorso dos dedos de uma mão com a palma da mão oposta, segurando os dedos, e vice-versa"^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Friccionar o polegar direito com o auxílio da palma da mão esquerda, realizando movimento circular, e vice-versa."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_7 a sop:Step ;
+    sop:discriminator 7 ;
+    sop:name "Friccionar as polpas digitais e as unhas da mão esquerda contra a palma da mão direita, fazendo um movimento circular, e vice-versa."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_8 a sop:Step ;
+    sop:discriminator 8 ;
+    sop:name "Friccionar os punhos com movimentos circulares."^^xsd:string .
+
+base:step_friccao_antisseptica_das_maos_com_preparacao_alcoolica_1_1_1_9 a sop:Step ;
+    sop:discriminator 9 ;
+    sop:name "Friccionar até secar. Não utilizar papel toalha."^^xsd:string .
+
+base:term_cdc143a8 a skos:Concept ;
+    skos:definition "Infecções Relacionadas à Assistência à Saúde"^^xsd:string ;
+    skos:prefLabel "IRAS"^^xsd:string .
+

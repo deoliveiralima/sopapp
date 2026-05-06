@@ -1,0 +1,69 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:formalizacao_de_demanda_de_solucao_de_ti_1_1 a sop:Sop ;
+    sop:approvalDate "2026-04-10"^^xsd:date ;
+    sop:creationDate "2026-04-10T00:00:00"^^xsd:dateTime ;
+    sop:description "Processo para Solicitação de Aquisição/Contratação de Solução de Tecnologia da Informação."^^xsd:string ;
+    sop:hasClassification base:concept_95eec217,
+        base:concept_ca612e79 ;
+    sop:hasItem base:item_eddd4754 ;
+    sop:hasSection base:section_formalizacao_de_demanda_de_solucao_de_ti_1_1_1,
+        base:section_formalizacao_de_demanda_de_solucao_de_ti_1_1_2 ;
+    sop:hasStatus sop:draft ;
+    sop:name "Formalização de Demanda de Solução de TI"^^xsd:string ;
+    sop:performedAt base:IFF ;
+    sop:performedBy base:roleCoordenador,
+        base:roleDiretor ;
+    sop:version "1"^^xsd:string .
+
+base:concept_95eec217 a skos:Concept ;
+    skos:prefLabel "Processo Eletrônico"^^xsd:string .
+
+base:concept_ca612e79 a skos:Concept ;
+    skos:prefLabel "Aquisições"^^xsd:string .
+
+base:item_eddd4754 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Solicitação de aquisição/contratação relacionada à TI para setores dos Campi." .
+
+base:section_formalizacao_de_demanda_de_solucao_de_ti_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_1,
+        base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_2,
+        base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_3 ;
+    sop:name "Abertura e Instrução da Demanda"^^xsd:string .
+
+base:section_formalizacao_de_demanda_de_solucao_de_ti_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_1,
+        base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_2,
+        base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_3 ;
+    sop:name "Análise e Instituição de Equipe"^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Preencher, assinar e finalizar o DFD (TIC) no módulo de Documentos Eletrônicos."^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Criar Processo Eletrônico no sistema e anexar o DFD finalizado."^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Encaminhar o processo ao Setor de TI do Campus ou da Reitoria."^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Analisar se o processo está devidamente instruído conforme normas de TIC."^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Preencher e coletar assinaturas para o despacho de instituição da Equipe de Planejamento da Contratação (EPC)."^^xsd:string .
+
+base:step_formalizacao_de_demanda_de_solucao_de_ti_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Retornar ao setor se desfavorável ou prosseguir se favorável e planejado."^^xsd:string .
+

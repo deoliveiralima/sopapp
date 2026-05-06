@@ -154,46 +154,56 @@
                     </div>`).join('')
                 : 'Sem itens registrados.';
  
-            // 6. Fluxo de Etapas (com lógica e link para Sub-POP)
-    
-            // Localize o loop data.steps.map dentro de renderPop()
-            // No view.html, dentro do loop document.getElementById('listSteps').innerHTML
-            document.getElementById('listSteps').innerHTML = data.steps.map((s, i) => {
-            // Verifica se a etapa aponta para um sub-processo
-            const linkBtn = s.isSubPop 
-                ? `<a href="/view/${s.id}" class="btn btn-sm btn-outline-info ms-2" style="font-size: 0.7rem;">
-                    <i class="bi bi-box-arrow-up-right"></i> ACESSAR SUB-PROCESSO
-                </a>` 
-                : '';
+            // 6. Fluxo de Etapas (Hierárquico com Condições Lógicas)
+            const listStepsContainer = document.getElementById('listSteps');
+            
+            if (!data.sections || data.sections.length === 0) {
+                listStepsContainer.innerHTML = '<p class="text-muted">Nenhuma etapa cadastrada.</p>';
+            } else {
+                listStepsContainer.innerHTML = data.sections.map(sec => `
+                    <div class="mb-4">
+                        ${sec.order > 0 ? `<h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4">${sec.order}. ${sec.name}</h5>` : ''}
+                        
+                        <div class="ps-2 ps-md-4 border-start border-3 border-primary bg-white py-2">
+                            ${sec.steps.map(s => `
+                                <div class="card mb-3 step-card ${s.isSubPop ? 'border-info bg-light' : ''} shadow-sm ms-2">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="step-number me-3 shadow-sm">${s.order}</div>
+                                                <h6 class="fw-bold mb-0 text-dark" style="font-size: 1.05rem;">${s.name}</h6>
+                                            </div>
+                                            ${s.isSubPop ? `<a href="/view/${s.id}" class="btn btn-sm btn-outline-info text-nowrap"><i class="bi bi-box-arrow-up-right"></i> Ver Sub-POP</a>` : ''}
+                                        </div>
+                                        
+                                        ${s.preCondition || s.posCondition ? `
+                                            <div class="ms-5 mb-3 p-2 rounded" style="background-color: #fdfdfd; border: 1px dashed #ccc;">
+                                                ${s.preCondition ? `<div class="mb-1 text-muted small"><span class="badge bg-warning text-dark me-1"><i class="bi bi-shield-check"></i> Pré-Requisito</span> ${s.preCondition}</div>` : ''}
+                                                ${s.posCondition ? `<div class="text-muted small"><span class="badge bg-success me-1"><i class="bi bi-check2-all"></i> Resultado Esperado</span> ${s.posCondition}</div>` : ''}
+                                            </div>
+                                        ` : ''}
 
-            return `
-            <div class="card mb-3 step-card ${s.isSubPop ? 'border-info bg-light' : ''} shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex align-items-center">
-                            <div class="step-number me-2">${s.order || (i + 1)}</div>
-                            <h6 class="fw-bold mb-0">${s.name}</h6>
-                        </div>
-                        ${linkBtn}
-                    </div>
-                    
-                    <div class="row g-2">
-                        <div class="col-md-6">
-                            <div class="p-2 border rounded bg-white">
-                                <small class="meta-label"><i class="bi bi-person-gear"></i> Executor</small>
-                                <span class="text-dark d-block fw-semibold">${s.performer}</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="p-2 border rounded bg-white">
-                                <small class="meta-label"><i class="bi bi-geo-alt"></i> Local</small>
-                                <span class="text-dark d-block fw-semibold">${s.place}</span>
-                            </div>
+                                        <div class="row g-2 ms-4">
+                                            <div class="col-md-6">
+                                                <div class="px-2 py-1 border rounded bg-light small">
+                                                    <span class="text-secondary"><i class="bi bi-person-gear"></i> Executor:</span> 
+                                                    <strong class="text-dark">${s.performer}</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="px-2 py-1 border rounded bg-light small">
+                                                    <span class="text-secondary"><i class="bi bi-geo-alt"></i> Local:</span> 
+                                                    <strong class="text-dark">${s.place}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
-                </div>
-            </div>`;
-        }).join('');
+                `).join('');
+            }
 
         } catch (error) {
             console.error("Erro ao renderizar POP:", error);
