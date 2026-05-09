@@ -1,0 +1,174 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:inclusao_de_servidor_no_sistema_de_backup_bacula_1_1 a sop:Sop ;
+    sop:createdBy base:igorDeOliveiraLima_1167114 ;
+    sop:creationDate "2026-01-05T00:00:00"^^xsd:dateTime ;
+    sop:description "Este procedimento descreve os passos necessários para configurar o Bacula File Daemon (FD) em um novo servidor (cliente) e registrá-lo no Bacula Director (DIR), garantindo a integridade dos dados institucionais através de rotinas automatizadas."^^xsd:string ;
+    sop:hasClassification base:concept_402051f4,
+        base:concept_7f3e0c61,
+        base:concept_e206a54e ;
+    sop:hasItem base:item_15c173bc,
+        base:item_341f0faa,
+        base:item_43a6b243,
+        base:item_5c315361,
+        base:item_7671b469,
+        base:item_800682f7,
+        base:item_9ed8e103 ;
+    sop:hasResponsible base:CORREIT ;
+    sop:hasSection base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1,
+        base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2,
+        base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3 ;
+    sop:hasStatus sop:approved ;
+    sop:hasTerm base:term_127ece9e,
+        base:term_3925ae0e,
+        base:term_696a406c,
+        base:term_94c19063,
+        base:term_a73e9d15 ;
+    sop:name "Inclusão de Servidor no Sistema de Backup Bacula"^^xsd:string ;
+    sop:performedAt base:CORREIT ;
+    sop:performedBy base:CORREIT,
+        base:roleAnalistaDeTecDaInformacao ;
+    sop:version "1"^^xsd:string .
+
+base:concept_402051f4 a skos:Concept ;
+    skos:prefLabel "Backup"^^xsd:string .
+
+base:concept_7f3e0c61 a skos:Concept ;
+    skos:prefLabel "Interno"^^xsd:string .
+
+base:concept_e206a54e a skos:Concept ;
+    skos:prefLabel "Linux"^^xsd:string .
+
+base:item_15c173bc a sop:ExpectedResults ;
+    sop:discriminator 3 ;
+    sop:name "Inclusão automática do servidor nos relatórios diários de backup." .
+
+base:item_341f0faa a sop:ExpectedResults ;
+    sop:discriminator 2 ;
+    sop:name "Primeiro backup (Full) finalizado com status \"OK\"." .
+
+base:item_43a6b243 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Padronizar a expansão da malha de backup, assegurando que nenhum servidor novo permaneça vulnerável a perdas de dados por falta de configuração." .
+
+base:item_5c315361 a sop:UsageSituation ;
+    sop:discriminator 1 ;
+    sop:name "Sempre que um novo servidor (físico ou VM em Proxmox) for integrado à rede de produção do Instituto" .
+
+base:item_7671b469 a sop:ExpectedResults ;
+    sop:discriminator 1 ;
+    sop:name "Conexão estabelecida com sucesso entre DIR e FD" .
+
+base:item_800682f7 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Verifique se as portas 9101, 9102 e 9103 estão liberadas no firewall (iptables/nftables) entre o servidor de backup e o cliente" .
+
+base:item_9ed8e103 a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "Caso o servidor utilize bancos de dados (MySQL/PostgreSQL), deve-se configurar um script de dump pré-backup (ClientRunBeforeJob)." .
+
+base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_1,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_2,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_3,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_4,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_5 ;
+    sop:name "Instalação e Configuração no Cliente (Servidor Novo)"^^xsd:string .
+
+base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_1,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_2,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_3,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_4,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_5 ;
+    sop:name "Configuração no Servidor Director"^^xsd:string .
+
+base:section_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3 a sop:Section ;
+    sop:discriminator 3 ;
+    sop:hasStep base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_1,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_2,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_3,
+        base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_4 ;
+    sop:name "Homologação no Bconsole"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Acesse o servidor cliente via SSH."^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Instale o pacote do cliente Bacula (ex: Debian/Ubuntu): apt update && apt install bacula-fd"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Edite o arquivo /etc/bacula/bacula-fd.conf"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Configure o recurso Director com o nome e a senha (password) que serão definidos no servidor central."^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Inicie e habilite o serviço: systemctl enable bacula-fd && systemctl start bacula-fd"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "No servidor central, acesse o diretório de configurações (geralmente /etc/bacula/conf.d/)"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Crie um novo arquivo de configuração para o cliente: novo-servidor.conf."^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Defina o recurso Client: Informe o nome, endereço IP e a mesma senha configurada no passo anterior."^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Defina o recurso Job: Associe o cliente a um FileSet, um Schedule (agenda) e um Pool de retenção."^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_2_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "alide a sintaxe das configurações: bacula-dir -t"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Acesse o console de gerenciamento: bconsole"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Recarregue as configurações: reload"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Teste a comunicação: status client=NomeDoServidor-fd"^^xsd:string .
+
+base:step_inclusao_de_servidor_no_sistema_de_backup_bacula_1_1_3_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Execute um backup de teste manual (Job de nível Full)"^^xsd:string .
+
+base:term_127ece9e a skos:Concept ;
+    skos:definition "Serviço que grava os dados no dispositivo de armazenamento"^^xsd:string ;
+    skos:prefLabel "SD (Storage Daemon)"^^xsd:string .
+
+base:term_3925ae0e a skos:Concept ;
+    skos:definition "Definição de quais arquivos ou diretórios serão incluídos/excluídos do backup"^^xsd:string ;
+    skos:prefLabel "FileSet"^^xsd:string .
+
+base:term_696a406c a skos:Concept ;
+    skos:definition "Serviço central do Bacula que coordena as operações"^^xsd:string ;
+    skos:prefLabel "DIR (Director)"^^xsd:string .
+
+base:term_94c19063 a skos:Concept ;
+    skos:definition "Serviço instalado no servidor cliente (o que será backapeado)"^^xsd:string ;
+    skos:prefLabel "FD (File Daemon)"^^xsd:string .
+
+base:term_a73e9d15 a skos:Concept ;
+    skos:definition "Interface de linha de comando para gestão do Bacula"^^xsd:string ;
+    skos:prefLabel "Bconsole"^^xsd:string .
+

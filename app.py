@@ -6,6 +6,7 @@ import hashlib
 import requests
 import re
 import unicodedata
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -239,14 +240,30 @@ def save_rdf():
         g.add((item_uri, SOP.discriminator, Literal(item['discriminator'], datatype=XSD.integer)))
         g.add((pop_uri, SOP.hasItem, item_uri))
 
-    # Serialização e Finalização
+    # --- Serialização e Finalização ---
     rdf_content = g.serialize(format="turtle")
+
+    # Define o nome da pasta e o caminho completo
+    folder_name = "rdfs"
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)  # Cria a pasta caso ela não exista
+
     filename = f"{pop_id}.ttl"
-    with open(filename, "w", encoding="utf-8") as f: 
+    # os.path.join garante que o caminho funcione em qualquer sistema (Windows/Linux)
+    file_path = os.path.join(folder_name, filename)
+
+    # Grava o arquivo dentro da pasta 'rdfs'
+    with open(file_path, "w", encoding="utf-8") as f: 
         f.write(rdf_content)
     
     # Se você tiver a função upload_to_graphdb funcionando:
     # upload_to_graphdb(rdf_content)
+
+    return jsonify({
+        "message": "RDF gerado e salvo na pasta rdfs!", 
+        "file": filename,
+        "path": file_path
+    }), 200
 
     return jsonify({"message": "RDF gerado e enviado com sucesso!", "file": filename}), 200
 

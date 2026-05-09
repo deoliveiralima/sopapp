@@ -1,0 +1,119 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:procedimento_para_recuperacao_de_backups_via_bacula_96_1_1 a sop:Sop ;
+    sop:createdBy base:igorDeOliveiraLima_1167114 ;
+    sop:creationDate "2026-01-05T00:00:00"^^xsd:dateTime ;
+    sop:description "Guia técnico para restauração de arquivos e diretórios a partir de volumes de backup armazenados em disco ou fita."^^xsd:string ;
+    sop:hasClassification base:concept_402051f4,
+        base:concept_7f3e0c61,
+        base:concept_e206a54e ;
+    sop:hasItem base:item_18089a1e,
+        base:item_2ec7b711,
+        base:item_6935ea3a,
+        base:item_c50fdf3d ;
+    sop:hasResponsible base:CORREIT ;
+    sop:hasSection base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1,
+        base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2,
+        base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3 ;
+    sop:hasStatus sop:approved ;
+    sop:hasTerm base:term_696a406c,
+        base:term_a73e9d15 ;
+    sop:name "Procedimento para Recuperação de Backups via Bacula 9.6"^^xsd:string ;
+    sop:performedAt base:CORREIT ;
+    sop:performedBy base:CORREIT,
+        base:roleAnalistaDeTecDaInformacao ;
+    sop:version "1"^^xsd:string .
+
+base:concept_402051f4 a skos:Concept ;
+    skos:prefLabel "Backup"^^xsd:string .
+
+base:concept_7f3e0c61 a skos:Concept ;
+    skos:prefLabel "Interno"^^xsd:string .
+
+base:concept_e206a54e a skos:Concept ;
+    skos:prefLabel "Linux"^^xsd:string .
+
+base:item_18089a1e a sop:ExpectedResults ;
+    sop:discriminator 2 ;
+    sop:name "Primeiro backup (Full) finalizado com status \"OK\"" .
+
+base:item_2ec7b711 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Certifique-se de que o volume necessário está \"In-Changer\" na biblioteca de fitas antes de iniciar o processo." .
+
+base:item_6935ea3a a sop:Note ;
+    sop:discriminator 2 ;
+    sop:name "Em caso de restauração parcial, valide o checksum dos arquivos após o término da tarefa." .
+
+base:item_c50fdf3d a sop:ExpectedResults ;
+    sop:discriminator 2 ;
+    sop:name "Recuperação total dos arquivos selecionados com suas permissões originais preservadas no diretório de destino." .
+
+base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1_1,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1_2 ;
+    sop:name "Iniciação e Ambiente"^^xsd:string .
+
+base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_1,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_2,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_3,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_4 ;
+    sop:name "Seleção de Dados e Ponto de Restauração"^^xsd:string .
+
+base:section_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3 a sop:Section ;
+    sop:discriminator 3 ;
+    sop:hasStep base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_1,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_2,
+        base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_3 ;
+    sop:name "Configuração de Destino e Execução"^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Acesso ao Console: Efetuar login no servidor do Bacula Director (DIR) e executar o comando bconsole"^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Verificação de Status: Executar status director para garantir que não existam bloqueios no agendamento."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Comando Restore: Digitar restore e escolher a opção desejada (ex: 5: Select the most recent backup for a client)."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Filtro de Cliente: Selecionar a URI do cliente que receberá os dados restaurados."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Marcação de Arquivos: Utilizar os comandos cd (navegar), ls (listar) e mark (marcar) para selecionar os itens específicos para recuperação."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_2_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Finalização da Seleção: Digitar done para processar a árvore de arquivos e gerar o Job de restauração."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Definição do Local (Where): No menu de confirmação do Job, utilizar mod e selecionar Where para definir o diretório de destino (ex: /tmp/bacula-restored)."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Início da Tarefa: Confirmar com yes para iniciar a transferência dos dados."^^xsd:string .
+
+base:step_procedimento_para_recuperacao_de_backups_via_bacula_96_1_1_3_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Monitoramento: Acompanhar a execução com o comando status client para verificar a velocidade e possíveis erros de leitura de fita."^^xsd:string .
+
+base:term_696a406c a skos:Concept ;
+    skos:definition "Serviço central do Bacula que coordena as operações"^^xsd:string ;
+    skos:prefLabel "DIR (Director)"^^xsd:string .
+
+base:term_a73e9d15 a skos:Concept ;
+    skos:definition "Interface de linha de comando para gestão do Bacula"^^xsd:string ;
+    skos:prefLabel "Bconsole"^^xsd:string .
+

@@ -1,0 +1,82 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:criar_conta_de_e_mail_para_servidor_no_suap_1_1 a sop:Sop ;
+    sop:createdBy base:igorDeOliveiraLima_1167114 ;
+    sop:creationDate "2021-02-10T00:00:00"^^xsd:dateTime ;
+    sop:description "Este documento visa auxiliar na criação de contas de e-mail para pessoas e setores no domínio IFF."^^xsd:string ;
+    sop:hasClassification base:concept_043053c6,
+        base:concept_1ec5f5ec,
+        base:concept_7f3e0c61 ;
+    sop:hasItem base:item_21c18dc7,
+        base:item_bf1c9508 ;
+    sop:hasResponsible base:CORREIT ;
+    sop:hasSection base:section_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1 ;
+    sop:hasStatus sop:approved ;
+    sop:name "Criar conta de e-mail para servidor no SUAP"^^xsd:string ;
+    sop:performedBy base:CGSTIREIT,
+        base:CTICAC,
+        base:CTICBJI,
+        base:CTICCI,
+        base:CTICG,
+        base:CTICITAB,
+        base:CTICSAP,
+        base:CTICSJB,
+        base:DTICCC,
+        base:roleAnalistaDeTecDaInformacao,
+        base:roleTecDeTecnologiaDaInformacao ;
+    sop:version "1"^^xsd:string .
+
+base:concept_043053c6 a skos:Concept ;
+    skos:prefLabel "SUAP"^^xsd:string .
+
+base:concept_1ec5f5ec a skos:Concept ;
+    skos:prefLabel "E-mail"^^xsd:string .
+
+base:concept_7f3e0c61 a skos:Concept ;
+    skos:prefLabel "Interno"^^xsd:string .
+
+base:item_21c18dc7 a sop:Note ;
+    sop:discriminator 1 ;
+    sop:name "Para o cadastro do usuário ser efetuado, é necessário o preenchimento do “Formulário de Solicitação de Conta de E-mail Institucional.odt ”, assinado pelo Coordenador do Setor onde o usuário esteja alocado." .
+
+base:item_bf1c9508 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Este documento tem como objetivo apresentar de maneira simplificada a forma de acesso ao Sistema de Criação de email e a maneira de criar uma conta, através do preenchimento dos campos necessários." .
+
+base:section_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_1,
+        base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_2,
+        base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_3,
+        base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_4,
+        base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_5,
+        base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_6 ;
+    sop:name "Etapas"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Acessar SUAP https://suap.iff.edu.br/"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Na barra lateral esquerda abrir a arvore de submenus abaixo de Tec. da Informçaõ"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Clicar em e-mail e em Criar e-mail Servidor/Estagiário"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Na nova tela, buscar pelo nome do servidor"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Na tela seguinte, seleciona o nome de usuário informar a senha e confirmá-la"^^xsd:string .
+
+base:step_criar_conta_de_e_mail_para_servidor_no_suap_1_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Por fim, clicar em enviar"^^xsd:string .
+

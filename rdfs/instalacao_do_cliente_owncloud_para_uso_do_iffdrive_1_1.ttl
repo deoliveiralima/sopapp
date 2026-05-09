@@ -1,0 +1,91 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1 a sop:Sop ;
+    sop:approvedBy base:igorDeOliveiraLima_1167114 ;
+    sop:createdBy base:antonioGuedesSoaresJunior_1673149 ;
+    sop:creationDate "2016-02-10T00:00:00"^^xsd:dateTime ;
+    sop:description """Este procedimento visa auxiliar a instalação e configuração do aplicativo ownCloud. O ownCloud é uma ferramenta que permite para ser usado com o IFFDrive para acessar os arquivos que se encontram no servidor. Ele permite também que se tenha uma cópia local dos arquivos. Uma vez atualizados os arquivos localmente, automaticamente será sincronizado com o
+servidor."""^^xsd:string ;
+    sop:hasClassification base:concept_d9828156 ;
+    sop:hasItem base:item_4ed536cd,
+        base:item_a8f2ad1d ;
+    sop:hasResponsible base:CORREIT ;
+    sop:hasSection base:section_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1,
+        base:section_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2 ;
+    sop:hasStatus sop:approved ;
+    sop:name "Instalação do Cliente ownCloud para uso do IFFDrive"^^xsd:string ;
+    sop:performedBy base:IFF ;
+    sop:version "1"^^xsd:string .
+
+base:concept_d9828156 a skos:Concept ;
+    skos:prefLabel "Armazenamento de arquivos"^^xsd:string .
+
+base:item_4ed536cd a sop:BibliographicReference ;
+    sop:discriminator 1 ;
+    sop:name "ownCloud Documentation Overview https://doc.owncloud.com/index.html" .
+
+base:item_a8f2ad1d a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Este documento tem como objetivo apresentar todas as informações necessárias para que um usuário consiga instalar e configurar o ownCloud, mostrando todos os passos necessários" .
+
+base:section_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_1,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_2,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_3,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_4,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_5 ;
+    sop:name "Instalação"^^xsd:string .
+
+base:section_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2 a sop:Section ;
+    sop:discriminator 2 ;
+    sop:hasStep base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_1,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_2,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_3,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_4,
+        base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_5 ;
+    sop:name "Configuração"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Para se realizar a instalação do ownCloud no Windows, devemos primeiramente baixar o aplicativo. O mesmo pode ser baixado através do seguinte link: https://owncloud.org/install/"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Após acessar página, ir em Install Desktop Clients e escolher a versão para Windows"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Terminado o download do aplicativo, iremos realizar a instalação. Clicando duas vezes em cima do aplicativo"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Na tela acima, clicar em Instalar. Em seguida será exibida a seguinte  tela"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Finalizado o processo de instalação, a seguinte tela será exibida:"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Uma vez instalado o cliente do ownCloud, agora vamos configurá-lo para funcionar junto ao IFFDrive. Ao executar o aplicativo, será exibida a seguinte tela:"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Na tela acima, devemos colocar o endereço do servidor do IFFDrive. O endereço é: https://drive.iff.edu.br. Após, clicaremos no botão Avançar. A seguinte tela então será exibida"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Na tela acima, o aplicativo solicita um usuário e uma senha. Nesses campos iremos colocar nosso usuário do IDIFF (CPF) e a senha que cadastramos no portal do IDIFF (https://id.iff.edu.br). Depois iremos clicar no botão Avançar. Será exibida a seguinte tela:"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Na tela acima temos o local onde será criada a pasta do ownCloud. Essa pasta, conforme imagem acima, será criada no mesmo local onde estão localizadas as pastas Documentos, Downloads, Imagens, etc, ou seja, dentro da pasta do usuário do computador. Depois de criada a pasta, todos os arquivos serão baixados e sincronizados com essa pasta. Nesta tela, basta clicarmos no botão Conectar. Será então exibida a seguinte tela:"^^xsd:string .
+
+base:step_instalacao_do_cliente_owncloud_para_uso_do_iffdrive_1_1_2_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Na tela acima nos é mostrado que estamos com tudo configurado. Basta clicarmos no botão Terminar. Uma vez finalizado, o sincronismo começará. Perto do relógio do Windows será exibido o ícone de sincronismo dos arquivos ( ). Após finalizado o sincronismo, será exibido o seguinte:"^^xsd:string .
+

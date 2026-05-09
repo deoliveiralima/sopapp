@@ -1,0 +1,29 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:teste_1_ a sop:Sop ;
+    sop:approvedBy base:albertoJorgeFialhoMidon_2319094 ;
+    sop:createdBy base:adrianaSoaresDaSilvaCardoso_3358056 ;
+    sop:creationDate "2024-10-10T00:00:00"^^xsd:dateTime ;
+    sop:description "a"^^xsd:string ;
+    sop:hasClassification base:concept_698dc19d ;
+    sop:hasResponsible base:IFF ;
+    sop:hasSection base:section_teste_1__1 ;
+    sop:hasStatus sop:approved ;
+    sop:name "teste"^^xsd:string ;
+    sop:version ""^^xsd:string .
+
+base:concept_698dc19d a skos:Concept ;
+    skos:prefLabel "teste"^^xsd:string .
+
+base:section_teste_1__1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_teste_1__1_1 ;
+    sop:name "a"^^xsd:string .
+
+base:step_teste_1__1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "a"^^xsd:string .
+

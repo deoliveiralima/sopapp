@@ -1,0 +1,74 @@
+@prefix base: <http://exemplo.org/iff#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sop: <https://purl.archive.org/sopontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:procedimento_de_acesso_ao_rdweb_1_1 a sop:Sop ;
+    sop:approvalDate "2015-01-10"^^xsd:date ;
+    sop:createdBy base:blendaDefanteTerra_1185125 ;
+    sop:creationDate "2015-01-10T00:00:00"^^xsd:dateTime ;
+    sop:description "Este documento visa auxiliar no acesso ao RDWeb."^^xsd:string ;
+    sop:hasClassification base:concept_aa8b85e6 ;
+    sop:hasItem base:item_27c139b0,
+        base:item_5c1d9054,
+        base:item_bb74e318 ;
+    sop:hasResponsible base:CORREIT ;
+    sop:hasSection base:section_procedimento_de_acesso_ao_rdweb_1_1_1 ;
+    sop:hasStatus sop:approved ;
+    sop:hasTerm base:term_aa8b85e6 ;
+    sop:name "Procedimento de Acesso ao RDWeb"^^xsd:string ;
+    sop:version "1"^^xsd:string .
+
+base:concept_aa8b85e6 a skos:Concept ;
+    skos:prefLabel "Rdweb"^^xsd:string .
+
+base:item_27c139b0 a sop:Material ;
+    sop:discriminator 1 ;
+    sop:name "Windows 7 ou superior" .
+
+base:item_5c1d9054 a sop:Objective ;
+    sop:discriminator 1 ;
+    sop:name "Apresentar de maneira simplificada como realizar a autenticação no portal RDWeb e abrir os aplicativos disponibilizados." .
+
+base:item_bb74e318 a sop:Material ;
+    sop:discriminator 2 ;
+    sop:name "Internet Explorer 9 ou superior" .
+
+base:section_procedimento_de_acesso_ao_rdweb_1_1_1 a sop:Section ;
+    sop:discriminator 1 ;
+    sop:hasStep base:step_procedimento_de_acesso_ao_rdweb_1_1_1_1,
+        base:step_procedimento_de_acesso_ao_rdweb_1_1_1_2,
+        base:step_procedimento_de_acesso_ao_rdweb_1_1_1_3,
+        base:step_procedimento_de_acesso_ao_rdweb_1_1_1_4,
+        base:step_procedimento_de_acesso_ao_rdweb_1_1_1_5,
+        base:step_procedimento_de_acesso_ao_rdweb_1_1_1_6 ;
+    sop:name "(Remote Desktop Web Access)"^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_1 a sop:Step ;
+    sop:discriminator 1 ;
+    sop:name "Acessar ao portal do RDWeb, obrigatoriamente pelo Internet Explorer. Após, preencher os campos Login e Senha com os seguintes dados: IFF\\ <CPF> e Senha do IdIFF"^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_2 a sop:Step ;
+    sop:discriminator 2 ;
+    sop:name "Uma vez logado no RDWeb, será exibido a tela com os aplicativos disponíveis para o usuário acessar."^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_3 a sop:Step ;
+    sop:discriminator 3 ;
+    sop:name "Clicar no aplicativo desejado. Após, será exibido uma tela de conexão. Marcar os campos Unidades, àrea de Transferência e Impressoras. Clicar em Conectar."^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_4 a sop:Step ;
+    sop:discriminator 4 ;
+    sop:name "Abrirá uma nova caixa solicitado os dados de login novamente. Preencher com IFF\\<CPF> e senha do IdIFF"^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_5 a sop:Step ;
+    sop:discriminator 5 ;
+    sop:name "Após, será aberto uma nova janela solicitando o aceite do certificado do servidor. Basta clicar em Sim."^^xsd:string .
+
+base:step_procedimento_de_acesso_ao_rdweb_1_1_1_6 a sop:Step ;
+    sop:discriminator 6 ;
+    sop:name "Aguardar a abertura do aplicativo"^^xsd:string .
+
+base:term_aa8b85e6 a skos:Concept ;
+    skos:definition "Remote Desktop Web Access - Recurso da Microsoft que permite acessar áreas de trabalho e aplicativos do Windows instalados em um servidor central por meio de um navegador web"^^xsd:string ;
+    skos:prefLabel " RDWeb "^^xsd:string .
+
